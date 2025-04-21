@@ -16,10 +16,11 @@
             theme: {
                 extend: {
                     colors: {
-                        'nintendo-red': '{{ site.theme_settings.nintendo_colors.red }}',
-                        'nintendo-dark': '{{ site.theme_settings.nintendo_colors.dark }}',
-                        'nintendo-gray': '{{ site.theme_settings.nintendo_colors.gray }}',
-                        'nintendo-light': '{{ site.theme_settings.nintendo_colors.light }}',
+                        'primary': 'var(--color-primary)',
+                        'primary-dark': '#cc0010', /* slightly darker primary */
+                        'dark': 'var(--color-dark)',
+                        'neutral': 'var(--color-neutral)',
+                        'light': 'var(--color-light)',
                     }
                 }
             }

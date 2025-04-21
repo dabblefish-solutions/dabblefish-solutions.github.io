@@ -1,22 +1,22 @@
 :root {
-    --nintendo-red: #E60012;
-    --nintendo-dark: #1B1B1B;
-    --nintendo-gray: #464646;
-    --nintendo-light: #E1E1E1;
+    --color-primary: #E60012;
+    --color-dark: #1B1B1B;
+    --color-neutral: #464646;
+    --color-light: #E1E1E1;
 }
 
 /* Custom styles beyond Tailwind */
 @layer components {
     .btn-primary {
-        @apply bg-nintendo-red text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors;
+        @apply bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors;
     }
     
     .btn-secondary {
-        @apply bg-white text-nintendo-red px-8 py-3 rounded-lg font-medium hover:bg-nintendo-light transition-colors;
+        @apply bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-light transition-colors;
     }
 
     .section-title {
-        @apply text-3xl font-bold text-center mb-16 text-nintendo-dark;
+        @apply text-3xl font-bold text-center mb-16 text-dark;
     }
 }
 
@@ -33,13 +33,13 @@
 .btn-bubble {
     @apply relative text-white font-medium;
     background: transparent;
-    border: 2px solid var(--nintendo-red);
+    border: 2px solid var(--color-primary);
 }
 
 .btn-bubble::before {
     content: '';
     @apply absolute inset-0 rounded-lg;
-    background: var(--nintendo-red);
+    background: var(--color-primary);
     z-index: -1;
     transition: transform 0.3s ease;
 }
