@@ -1,0 +1,24 @@
+/* Custom styles beyond Tailwind */
+@layer components {
+    .btn-primary {
+        @apply bg-nintendo-red text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors;
+    }
+    
+    .btn-secondary {
+        @apply bg-white text-nintendo-red px-8 py-3 rounded-lg font-medium hover:bg-nintendo-light transition-colors;
+    }
+
+    .section-title {
+        @apply text-3xl font-bold text-center mb-16 text-nintendo-dark;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+} 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nintendo-red': '{{ site.theme_settings.nintendo_colors.red }}',
+                        'nintendo-dark': '{{ site.theme_settings.nintendo_colors.dark }}',
+                        'nintendo-gray': '{{ site.theme_settings.nintendo_colors.gray }}',
+                        'nintendo-light': '{{ site.theme_settings.nintendo_colors.light }}',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+    {{ content_for_head }}
+</head>
+<body class="bg-nintendo-light">
+    {% include navigation.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+    <!-- Custom JS -->
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    {{ content_for_footer }}
+</body>
+</html> 

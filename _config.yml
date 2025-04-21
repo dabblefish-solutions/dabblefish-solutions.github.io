@@ -1,0 +1,18 @@
+title: Dabblefish
+description: AI Enablement and Data Solutions
+baseurl: ""
+url: "https://dabblefish.com"
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Theme settings
+theme_settings:
+  nintendo_colors:
+    red: '#E60012'
+    dark: '#1B1B1B'
+    gray: '#464646'
+    light: '#E1E1E1' 

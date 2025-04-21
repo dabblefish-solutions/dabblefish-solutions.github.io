@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}Dabblefish - AI Enablement and Data Solutions{% endblock %}">
+    <title>{% block title %}dabblefish{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nintendo-red': '#E60012',
+                        'nintendo-dark': '#1B1B1B',
+                        'nintendo-gray': '#464646',
+                        'nintendo-light': '#E1E1E1',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-nintendo-light">
+    <!-- Navigation -->
+    <nav class="bg-nintendo-dark fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-nintendo-light text-2xl font-bold">dabblefish</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-nintendo-light hover:text-white">Home</a>
+                    <a href="/pages/ai-enablement.html" class="text-nintendo-light hover:text-white">AI Enablement</a>
+                    <a href="#services" class="text-nintendo-light hover:text-white">Services</a>
+                    <a href="#contact" class="text-nintendo-light hover:text-white">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-nintendo-dark py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-nintendo-light">&copy; 2024 Dabblefish LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="/assets/js/main.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

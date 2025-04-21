@@ -1,6 +1,114 @@
-Hello World
-Good day to you.
-How are you?
-I hope you are having a wonderful time.
-I am doing great, thank you for asking!
-Let's have a fantastic day together.
+---
+layout: default
+title: Home
+description: Expert guidance in AI enablement and modern data solutions
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dabblefish - AI & Data Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nintendo-red': '#E60012',
+                        'nintendo-dark': '#1B1B1B',
+                        'nintendo-gray': '#464646',
+                        'nintendo-light': '#E1E1E1',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-nintendo-light">
+    <!-- Navigation -->
+    <nav class="bg-nintendo-dark fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-nintendo-light text-2xl font-bold">dabblefish</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-nintendo-light hover:text-white">Home</a>
+                    <a href="#services" class="text-nintendo-light hover:text-white">Services</a>
+                    <a href="#about" class="text-nintendo-light hover:text-white">About</a>
+                    <a href="#contact" class="text-nintendo-light hover:text-white">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-nintendo-dark pt-32 pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:w-2/3">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Transform Your Business with AI & Data
+                </h1>
+                <p class="text-xl text-nintendo-light mb-8">
+                    {{ page.description }}
+                </p>
+                <a href="#contact" class="btn-primary">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">Our Services</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                {% include service-card.html 
+                    title="AI Enablement"
+                    items=site.data.services.ai_enablement %}
+                {% include service-card.html 
+                    title="Data Solutions"
+                    items=site.data.services.data_solutions %}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-nintendo-red py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Ready to Take Your Business to the Next Level?</h2>
+            <p class="text-xl text-white mb-8">Schedule a free consultation today</p>
+            <a href="#contact" class="btn-secondary">
+                Contact Us
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">About Us</h2>
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-lg text-gray-600">
+                    At Dabblefish, we specialize in helping organizations navigate the evolving landscape of AI and data. 
+                    Our expert team combines deep technical knowledge with practical business experience to deliver 
+                    transformative AI enablement and data solutions. Whether you're just starting your AI journey or 
+                    looking to optimize your data infrastructure, we're here to guide you every step of the way.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {% include contact-form.html %}
+
+    <!-- Footer -->
+    <footer class="bg-nintendo-dark py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-nintendo-light">&copy; 2024 Dabblefish LLC. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

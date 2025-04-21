@@ -1,0 +1,11 @@
+<div class="bg-white rounded-lg shadow-lg p-8 border-2 border-nintendo-gray">
+    <h3 class="text-xl font-bold mb-6 text-nintendo-red">{{ include.title }}</h3>
+    <ul class="space-y-6">
+        {% for item in include.items %}
+        <li>
+            <h4 class="font-semibold mb-2">{{ item.title }}</h4>
+            <p class="text-gray-600">{{ item.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div> 
