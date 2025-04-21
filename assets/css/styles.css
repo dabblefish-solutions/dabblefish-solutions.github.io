@@ -1,3 +1,10 @@
+:root {
+    --nintendo-red: #E60012;
+    --nintendo-dark: #1B1B1B;
+    --nintendo-gray: #464646;
+    --nintendo-light: #E1E1E1;
+}
+
 /* Custom styles beyond Tailwind */
 @layer components {
     .btn-primary {
