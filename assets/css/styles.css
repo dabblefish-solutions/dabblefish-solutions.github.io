@@ -21,4 +21,26 @@
 
 .animate-fade-in {
     animation: fadeIn 0.5s ease-in;
+}
+
+.btn-bubble {
+    @apply relative text-white font-medium;
+    background: transparent;
+    border: 2px solid var(--nintendo-red);
+}
+
+.btn-bubble::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg;
+    background: var(--nintendo-red);
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+.btn-bubble:hover::before {
+    transform: scale(1.05);
+}
+
+.btn-bubble:active::before {
+    transform: scale(0.95);
 } 
