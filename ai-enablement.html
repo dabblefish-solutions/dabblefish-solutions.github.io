@@ -5,20 +5,46 @@ description: Transform your organization with AI-powered solutions
 ---
 
 <!-- Hero Section -->
-<section id="home" class="relative bg-nintendo-dark pt-32 pb-24">
+<section id="home" class="relative bg-dark pt-32 pb-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:w-2/3">
             <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
                 AI Enablement Services
             </h1>
-            <p class="text-xl text-nintendo-light mb-8">
+            <p class="text-xl text-light mb-8">
                 {{ page.description }}
             </p>
-            <a href="#contact" class="btn-primary">
+            <a href="#contact" class="bg-primary font-bold text-white btn-bubble px-8 py-3 rounded-lg inline-block">
                 Start Your AI Journey
             </a>
         </div>
     </div>
 </section>
 
-<!-- Rest of the content... --> 
+<!-- Services Section -->
+<section id="services" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title">Our AI Services</h2>
+        <div class="grid md:grid-cols-1 gap-8 max-w-4xl mx-auto">
+            {% for service in site.data.services.ai_enablement %}
+            <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral">
+                <h3 class="text-xl font-bold mb-6 text-primary">{{ service.title }}</h3>
+                <p class="text-gray-600">{{ service.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-primary py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Start Your AI Journey?</h2>
+        <p class="text-xl text-white mb-8">Let's discuss how AI can transform your business</p>
+        <a href="#contact" class="btn-secondary">
+            Schedule a Consultation
+        </a>
+    </div>
+</section>
+
+{% include contact-form.html %} 

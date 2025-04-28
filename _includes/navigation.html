@@ -2,14 +2,51 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-                <a href="{{ '/' | relative_url }}" class="text-light text-2xl font-bold">{{ site.title }}</a>
+                <img src="/assets/images/fish.png" alt="Dabblefish Logo" class="h-10 w-10 mr-3 object-contain">
+                <a href="{{ '/' | relative_url }}" class="text-light text-3xl font-bold">{{ site.title }}</a>
             </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ '/' | relative_url }}" class="text-light hover:text-white">Home</a>
-                <a href="{{ '/ai-enablement' | relative_url }}" class="text-light hover:text-white">AI Enablement</a>
-                <a href="#services" class="text-light hover:text-white">Services</a>
-                <a href="#contact" class="text-light hover:text-white">Contact</a>
+            <!-- Menu button -->
+            <div class="flex items-center">
+                <button type="button" class="menu-button text-light hover:text-white focus:outline-none" aria-label="Toggle menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu -->
+        <div class="menu hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 text-right">
+                <a href="{{ '/ai-enablement' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>ai enablement</span>
+                </a>
+                <a href="#services" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>data services</span>
+                </a>
+                <a href="#contact" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>contact</span>
+                </a>
             </div>
         </div>
     </div>
-</nav> 
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const menu = document.querySelector('.menu');
+    
+    menuButton.addEventListener('click', function() {
+        menu.classList.toggle('hidden');
+    });
+});
+</script> 

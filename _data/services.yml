@@ -1,13 +1,13 @@
 ai_enablement:
-  - title: AI Basics
-    description: Understanding AI fundamentals and navigating available tools and platforms
-  - title: AI Workflow Transformation
+  - title: Getting Started with AI
+    description: Understanding AI, the tools available, and how to start using them.
+  - title: Using AI to Transform Your Work
     description: Integrate AI solutions into your existing workflows for maximum efficiency
-  - title: AI Workspace Mindsets
+  - title: Building an AI-Powered Organization
     description: Develop the right approach and culture for AI adoption in your organization
 
 data_solutions:
   - title: ETL Solutions
     description: Specialized in dbt implementations for modern data stack transformation
   - title: Looker Solutions
-    description: Expert implementation and optimization of Looker for business intelligence 
+    description: Expert implementation and optimization of Looker for business intelligence

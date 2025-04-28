@@ -1,0 +1,46 @@
+/* Custom styles beyond Tailwind */
+@layer components {
+    .btn-primary {
+        @apply bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors;
+    }
+    
+    .btn-secondary {
+        @apply bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-light transition-colors;
+    }
+
+    .section-title {
+        @apply text-3xl font-bold text-center mb-16 text-dark;
+    }
+
+    .btn-bubble {
+        @apply relative text-white font-medium;
+        background: transparent;
+        border: 2px solid #E60012;
+    }
+
+    .btn-bubble::before {
+        content: '';
+        @apply absolute inset-0 rounded-lg;
+        background: #E60012;
+        z-index: -1;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-bubble:hover::before {
+        transform: scale(1.05);
+    }
+
+    .btn-bubble:active::before {
+        transform: scale(0.95);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+} 

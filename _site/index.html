@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Expert guidance in AI enablement and modern data solutions">
+    <title>Home - dabblefish</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#E60012',
+                        'primary-dark': '#cc0010',
+                        'dark': '#1B1B1B',
+                        'neutral': '#464646',
+                        'light': '#E1E1E1',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    
+</head>
+<body class="bg-light">
+    <nav class="bg-dark fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <img src="/assets/images/fish.png" alt="Dabblefish Logo" class="h-10 w-10 mr-3 object-contain">
+                <a href="/" class="text-light text-3xl font-bold">dabblefish</a>
+            </div>
+            <!-- Menu button -->
+            <div class="flex items-center">
+                <button type="button" class="menu-button text-light hover:text-white focus:outline-none" aria-label="Toggle menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Menu -->
+        <div class="menu hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 text-right">
+                <a href="/ai-enablement" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>ai enablement</span>
+                </a>
+                <a href="#services" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>data services</span>
+                </a>
+                <a href="#contact" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
+                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
+                    </svg>
+                    <span>contact</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const menu = document.querySelector('.menu');
+    
+    menuButton.addEventListener('click', function() {
+        menu.classList.toggle('hidden');
+    });
+});
+</script> 
+
+    <!-- Hero Section -->
+<section id="home" class="relative bg-dark pt-32 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:w-2/3">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Transform Your Business with AI & Data
+            </h1>
+            <p class="text-xl text-light mb-8">
+                Expert guidance in AI enablement and modern data solutions
+            </p>
+            <a href="#contact" class="bg-primary font-bold text-white btn-bubble px-8 py-3 rounded-lg inline-block">
+                Get Started
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title">Our Services</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral">
+    <h3 class="text-xl font-bold mb-6 text-primary">AI Enablement</h3>
+    <ul class="space-y-6">
+        
+        <li>
+            <h4 class="font-semibold mb-2">Getting Started with AI</h4>
+            <p class="text-gray-600">Understanding AI, the tools available, and how to start using them.</p>
+        </li>
+        
+        <li>
+            <h4 class="font-semibold mb-2">Using AI to Transform Your Work</h4>
+            <p class="text-gray-600">Integrate AI solutions into your existing workflows for maximum efficiency</p>
+        </li>
+        
+        <li>
+            <h4 class="font-semibold mb-2">Building an AI-Powered Organization</h4>
+            <p class="text-gray-600">Develop the right approach and culture for AI adoption in your organization</p>
+        </li>
+        
+    </ul>
+</div> 
+            <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral">
+    <h3 class="text-xl font-bold mb-6 text-primary">Data Solutions</h3>
+    <ul class="space-y-6">
+        
+        <li>
+            <h4 class="font-semibold mb-2">ETL Solutions</h4>
+            <p class="text-gray-600">Specialized in dbt implementations for modern data stack transformation</p>
+        </li>
+        
+        <li>
+            <h4 class="font-semibold mb-2">Looker Solutions</h4>
+            <p class="text-gray-600">Expert implementation and optimization of Looker for business intelligence</p>
+        </li>
+        
+    </ul>
+</div> 
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-primary py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Take Your Business to the Next Level?</h2>
+        <p class="text-xl text-white mb-8">Schedule a free consultation today</p>
+        <a href="#contact" class="btn-secondary">
+            Contact Us
+        </a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title">About Us</h2>
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="text-lg text-gray-600">
+                At Dabblefish, we specialize in helping organizations navigate the evolving landscape of AI and data. 
+                Our expert team combines deep technical knowledge with practical business experience to deliver 
+                transformative AI enablement and data solutions. Whether you're just starting your AI journey or 
+                looking to optimize your data infrastructure, we're here to guide you every step of the way.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="bg-white py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="max-w-xl mx-auto">
+            <form id="contact-form" class="space-y-6">
+                <div>
+                    <input type="text" placeholder="Your Name" required
+                        class="w-full px-4 py-3 rounded-lg border-2 border-nintendo-gray focus:ring-2 focus:ring-nintendo-red focus:border-transparent">
+                </div>
+                <div>
+                    <input type="email" placeholder="Your Email" required
+                        class="w-full px-4 py-3 rounded-lg border-2 border-nintendo-gray focus:ring-2 focus:ring-nintendo-red focus:border-transparent">
+                </div>
+                <div>
+                    <textarea rows="5" placeholder="Your Message" required
+                        class="w-full px-4 py-3 rounded-lg border-2 border-nintendo-gray focus:ring-2 focus:ring-nintendo-red focus:border-transparent"></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</section> 
+
+
+    <footer class="bg-dark py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-light">&copy; 2025 Dabblefish LLC. All rights reserved.</p>
+    </div>
+</footer> 
+
+    <!-- Custom JS -->
+    <script src="/assets/js/main.js"></script>
+    
+</body>
+</html> 
