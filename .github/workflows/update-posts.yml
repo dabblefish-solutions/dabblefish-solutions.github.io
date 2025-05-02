@@ -1,0 +1,33 @@
+name: Update Substack Posts
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run at midnight UTC every day
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-posts:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install feedparser pyyaml
+        
+    - name: Update posts
+      run: python scripts/update_posts.py
+        
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add _data/posts.yml
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update Substack posts" && git push) 

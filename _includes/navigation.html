@@ -3,7 +3,12 @@
         <div class="flex justify-between h-16">
             <div class="flex items-center">
                 <img src="/assets/images/fish.svg" alt="Dabblefish Logo" class="h-10 w-10 mr-3 object-contain">
-                <a href="{{ '/' | relative_url }}" class="text-light text-3xl font-bold">{{ site.title }}</a>
+                <div class="flex items-baseline">
+                    <a href="{{ '/' | relative_url }}" class="text-light text-3xl font-bold">{{ site.title }}</a>
+                    {% if page.section %}
+                    <span class="text-light text-xl ml-2">/ {{ page.section }}</span>
+                    {% endif %}
+                </div>
             </div>
             <!-- Menu button -->
             <div class="flex items-center">
@@ -17,23 +22,17 @@
         <!-- Menu -->
         <div class="menu hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 text-right">
-                <a href="{{ '/ai-enablement' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                <a href="{{ '/thoughts' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
                     <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
                         <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
                     </svg>
-                    <span>ai enablement</span>
+                    <span>thoughts</span>
                 </a>
-                <a href="#services" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                <a href="{{ '/works' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
                     <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
                         <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
                     </svg>
-                    <span>data services</span>
-                </a>
-                <a href="#contact" class="block text-light hover:text-white text-lg flex items-center justify-end group">
-                    <svg class="h-5 w-5 mr-2 text-white opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 140 140" fill="currentColor">
-                        <path d="M60 0h20v20h-20z M80 20h20v20h-20z M100 40h20v20h-20z M0 60h20v20h-20z M20 60h20v20h-20z M40 60h20v20h-20z M60 60h20v20h-20z M80 60h20v20h-20z M100 60h20v20h-20z M120 60h20v20h-20z M100 80h20v20h-20z M80 100h20v20h-20z M60 120h20v20h-20z"/>
-                    </svg>
-                    <span>contact</span>
+                    <span>works</span>
                 </a>
             </div>
         </div>

@@ -1,0 +1,24 @@
+series:
+  - name: "Non Maneo. Fio."
+    description: "Exploring the nature of change and transformation"
+    posts:
+      - slug: "non-maneo-fio"
+        order: 1
+      - slug: "change-is-natural"
+        order: 2
+      - slug: "embracing-transformation"
+        order: 3
+
+  - name: "AI Insights"
+    description: "Thoughts on artificial intelligence and its impact"
+    posts:
+      - slug: "future-of-ai"
+        order: 1
+      - slug: "ai-ethics"
+        order: 2
+
+  - name: "Data Perspectives"
+    description: "Views on data science and analytics"
+    posts:
+      - slug: "data-driven-decisions"
+        order: 1 
