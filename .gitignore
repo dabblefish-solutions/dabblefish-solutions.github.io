@@ -4,9 +4,13 @@ node_modules/
 *.log 
 
 ## Jekyll
-_site/
+_site/*
+!_site/feed.xml
+
 .jekyll-cache/
 .jekyll-metadata
+
+
 
 ## Venv
 .venv/
