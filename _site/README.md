@@ -4,15 +4,31 @@ Corporate website for Dabblefish LLC, specializing in AI enablement and data sol
 
 ## Development
 
-This is a static website built with:
-- HTML5
+This is a Jekyll-based website built with:
+- Jekyll
 - Tailwind CSS
-- Vanilla JavaScript
+- Liquid templates
 
 ## Running Locally
 
-Run the following command:
+1. Install dependencies:
 ```bash
-python -m http.server 8000
+bundle install
 ```
-Visit `http://localhost:8000` in your browser.
+
+2. Start the Jekyll server:
+```bash
+bundle exec jekyll serve
+```
+
+Visit `http://localhost:4000` in your browser.
+
+## Structure
+
+- `_includes/` - Reusable components
+- `_layouts/` - Page templates
+- `_data/` - Site data files
+- `assets/` - Static assets (images, CSS, JS)
+- `works/` - Works/portfolio pages
+- `thoughts/` - Blog/insights pages
+- `scripts/` - Utility scripts for site management
