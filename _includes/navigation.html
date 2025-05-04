@@ -6,7 +6,13 @@
                 <div class="flex items-baseline">
                     <a href="{{ '/' | relative_url }}" class="text-light text-3xl font-bold">{{ site.title }}</a>
                     {% if page.section %}
-                    <span class="text-light text-xl ml-2">/ {{ page.section }}</span>
+                        {% if page.section == 'works / data' %}
+                            <span class="text-light text-xl ml-2">/ <a href="/works" class="text-light">works</a> / data</span>
+                        {% elsif page.section == 'works / ai' %}
+                            <span class="text-light text-xl ml-2">/ <a href="/works" class="text-light">works</a> / ai</span>
+                        {% else %}
+                            <span class="text-light text-xl ml-2">/ {{ page.section }}</span>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
