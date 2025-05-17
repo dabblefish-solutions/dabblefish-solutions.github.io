@@ -1,0 +1,5 @@
+---
+description: Updates the website's blog posts by fetching the latest content from the Substack RSS feed and converting it into a format that can be displayed on the website.
+globs: 
+alwaysApply: false
+---
