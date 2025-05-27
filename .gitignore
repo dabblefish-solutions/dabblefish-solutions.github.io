@@ -5,7 +5,6 @@ node_modules/
 
 ## Jekyll
 _site/*
-!_site/feed.xml
 
 .jekyll-cache/
 .jekyll-metadata
