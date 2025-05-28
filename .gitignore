@@ -14,3 +14,4 @@ _site/*
 ## Venv
 .venv/
 
+_site/feed.xml
