@@ -4,7 +4,7 @@ node_modules/
 *.log 
 
 ## Jekyll
-_site/*
+_site/
 
 .jekyll-cache/
 .jekyll-metadata
@@ -13,5 +13,3 @@ _site/*
 
 ## Venv
 .venv/
-
-_site/feed.xml
