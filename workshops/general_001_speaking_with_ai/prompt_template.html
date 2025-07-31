@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking with AI - How to Ask for What You Need</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #666666, #555555);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            padding: 30px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .fish-logo {
+            width: 100px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .template-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .template-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #E8E8E8;
+        }
+        
+        .prompt-item {
+            margin-bottom: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .prompt-item:last-child {
+            border-bottom: none;
+        }
+        
+        .prompt-label {
+            font-weight: bold;
+            color: #B8E6B8;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .prompt-text {
+            color: #E8E8E8;
+            font-size: 1em;
+            margin-left: 20px;
+        }
+        
+        .fill-blank {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 3px;
+            color: #FFE066;
+            font-style: italic;
+        }
+        
+        .examples-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .examples-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFE066;
+        }
+        
+        .example-item {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #D0D0D0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #B8B8B8;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="fish-logo">
+                <div class="logo-placeholder">
+                    <img src="assets/fish.png" alt="Dabblefish Logo" style="width: 100px; height: 80px;">
+                </div>
+            </div>
+            <h1 class="title">Speaking with AI</h1>
+            <h2 class="subtitle">How to Ask for What You Need</h2>
+        </div>
+        
+        <div class="template-section">
+            <h3 class="template-title">The Basic Prompting Template</h3>
+            
+            <div class="prompt-item">
+                <div class="prompt-label">WHO:</div>
+                <div class="prompt-text">You are a <span class="fill-blank">[role]</span></div>
+            </div>
+            
+            <div class="prompt-item">
+                <div class="prompt-label">WHY:</div>
+                <div class="prompt-text">
+                    The situation is <span class="fill-blank">[context]</span><br>
+                    My goal is <span class="fill-blank">[objective]</span><br>
+                    Important constraints: <span class="fill-blank">[limitations]</span>
+                </div>
+            </div>
+            
+            <div class="prompt-item">
+                <div class="prompt-label">WHAT:</div>
+                <div class="prompt-text">I need you to <span class="fill-blank">[specific task]</span></div>
+            </div>
+            
+            <div class="prompt-item">
+                <div class="prompt-label">HOW:</div>
+                <div class="prompt-text">
+                    Format the response as <span class="fill-blank">[structure]</span><br>
+                    Use a <span class="fill-blank">[style]</span> tone<br>
+                    Keep it <span class="fill-blank">[length/requirements]</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <strong>dabblefish | Learning | AI Series</strong>
+        </div>
+    </div>
+</body>
+</html>
