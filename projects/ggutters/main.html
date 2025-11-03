@@ -1,0 +1,210 @@
+---
+layout: default
+title: GGutters - Latest Products
+description: Browse the latest gutter products from our inventory
+---
+
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold text-dark mb-4">GGutters Inventory Browser</h1>
+            <p class="text-lg text-gray-600">Explore our latest product catalog</p>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-12 border-2 border-neutral">
+            <h2 class="text-xl font-bold text-dark mb-6">Filters</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Website Filter -->
+                <div>
+                    <label for="websiteFilter" class="block text-sm font-medium text-dark mb-2">Website</label>
+                    <select id="websiteFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                        <option value="">All Websites</option>
+                    </select>
+                </div>
+
+                <!-- Product Name Filter -->
+                <div>
+                    <label for="productFilter" class="block text-sm font-medium text-dark mb-2">Product Name</label>
+                    <select id="productFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                        <option value="">All Products</option>
+                    </select>
+                </div>
+
+                <!-- Description Filter -->
+                <div>
+                    <label for="descriptionFilter" class="block text-sm font-medium text-dark mb-2">Description</label>
+                    <input type="text" id="descriptionFilter" placeholder="Search descriptions..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                </div>
+
+                <!-- Stock Status Filter -->
+                <div>
+                    <label for="stockFilter" class="block text-sm font-medium text-dark mb-2">Stock Status</label>
+                    <select id="stockFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                        <option value="">All Items</option>
+                        <option value="true">In Stock</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="clearFilters" class="mt-6 px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition-opacity">
+                Clear All Filters
+            </button>
+        </div>
+
+        <!-- Results Counter -->
+        <div class="mb-6 text-gray-600">
+            Showing <span id="resultCount">0</span> of <span id="totalCount">0</span> items
+        </div>
+
+        <!-- Table Section -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border-2 border-neutral">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-neutral text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-semibold">Website</th>
+                            <th class="px-6 py-4 text-left font-semibold">Product Name</th>
+                            <th class="px-6 py-4 text-left font-semibold">Description</th>
+                            <th class="px-6 py-4 text-left font-semibold">SKU</th>
+                            <th class="px-6 py-4 text-left font-semibold">Price</th>
+                            <th class="px-6 py-4 text-center font-semibold">In Stock</th>
+                            <th class="px-6 py-4 text-left font-semibold">Link</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTable">
+                        <tr>
+                            <td colspan="7" class="px-6 py-8 text-center text-gray-500">Loading products...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+let allData = [];
+let filteredData = [];
+
+// Load JSON data on page load
+async function loadData() {
+    try {
+        const response = await fetch('./latest.json');
+        const rawData = await response.json();
+
+        // Extract just the json property from each item
+        allData = rawData.map(item => item.json);
+        filteredData = [...allData];
+
+        populateFilterOptions();
+        renderTable();
+    } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('resultsTable').innerHTML =
+            '<tr><td colspan="7" class="px-6 py-8 text-center text-red-500">Error loading products</td></tr>';
+    }
+}
+
+// Populate filter dropdowns with unique values
+function populateFilterOptions() {
+    // Populate websites
+    const websites = [...new Set(allData.map(item => item.website))].sort();
+    const websiteSelect = document.getElementById('websiteFilter');
+    websites.forEach(website => {
+        const option = document.createElement('option');
+        option.value = website;
+        option.textContent = website;
+        websiteSelect.appendChild(option);
+    });
+
+    // Populate products
+    const products = [...new Set(allData.map(item => item.productName))].sort();
+    const productSelect = document.getElementById('productFilter');
+    products.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product;
+        option.textContent = product;
+        productSelect.appendChild(option);
+    });
+
+    // Update total count
+    document.getElementById('totalCount').textContent = allData.length;
+}
+
+// Apply filters and render table
+function applyFilters() {
+    const website = document.getElementById('websiteFilter').value;
+    const product = document.getElementById('productFilter').value;
+    const description = document.getElementById('descriptionFilter').value.toLowerCase();
+    const stock = document.getElementById('stockFilter').value;
+
+    filteredData = allData.filter(item => {
+        const matchWebsite = !website || item.website === website;
+        const matchProduct = !product || item.productName === product;
+        const matchDescription = !description || item.description.toLowerCase().includes(description);
+        const matchStock = stock === '' || String(item.inStock) === stock;
+
+        return matchWebsite && matchProduct && matchDescription && matchStock;
+    });
+
+    renderTable();
+}
+
+// Render the results table
+function renderTable() {
+    const tbody = document.getElementById('resultsTable');
+    document.getElementById('resultCount').textContent = filteredData.length;
+
+    if (filteredData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-gray-500">No products match your filters</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = filteredData.map(item => `
+        <tr class="border-t border-gray-200 hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm text-gray-700">${item.website}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 font-medium">${item.productName}</td>
+            <td class="px-6 py-4 text-sm text-gray-600">${item.description}</td>
+            <td class="px-6 py-4 text-sm text-gray-600 font-mono">${item.sku}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">
+                ${item.price !== null ? `$${item.price.toFixed(2)}` : '<span class="text-gray-400">N/A</span>'}
+            </td>
+            <td class="px-6 py-4 text-center">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    item.inStock
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }">
+                    ${item.inStock ? 'Yes' : 'No'}
+                </span>
+            </td>
+            <td class="px-6 py-4 text-sm">
+                <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">
+                    View
+                </a>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Event listeners for filters
+document.getElementById('websiteFilter').addEventListener('change', applyFilters);
+document.getElementById('productFilter').addEventListener('change', applyFilters);
+document.getElementById('descriptionFilter').addEventListener('input', applyFilters);
+document.getElementById('stockFilter').addEventListener('change', applyFilters);
+
+// Clear filters button
+document.getElementById('clearFilters').addEventListener('click', () => {
+    document.getElementById('websiteFilter').value = '';
+    document.getElementById('productFilter').value = '';
+    document.getElementById('descriptionFilter').value = '';
+    document.getElementById('stockFilter').value = '';
+    filteredData = [...allData];
+    renderTable();
+});
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', loadData);
+</script>
