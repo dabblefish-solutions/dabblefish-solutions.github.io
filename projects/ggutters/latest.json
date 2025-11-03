@@ -1,1 +1,578 @@
-u«Z
+[
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring. HG White Aluminum",
+      "price": 19.22,
+      "currency": "USD",
+      "sku": "HGCSC5XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=5%22&color=HG%20White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 0
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spri Royal Brown Aluminum",
+      "price": 19.22,
+      "currency": "USD",
+      "sku": "RBCSC5XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=5%22&color=Royal%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 1
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring. HG White Aluminum",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "HGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=HG%20White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 2
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring. Mill Finish",
+      "price": 25.41,
+      "currency": "USD",
+      "sku": "MICSC6XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Mill%20Finish%20Aluminum&size=6%22&color=",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 3
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Roy Brown Aluminum",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "RBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Royal%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 4
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Dk. Bronze Aluminum",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "DBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Dark%20Bronze",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 5
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Grecian Green Alum.",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "GGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Grecian%20Green",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 6
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Natural Clay Alum.",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "NCCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Natural%20Clay",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 7
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. White Aluminum",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "WHCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 8
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Musket Brown Aluminum",
+      "price": 21.02,
+      "currency": "USD",
+      "sku": "MBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Musket%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 9
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Almond Aluminum",
+      "price": 21.02,
+      "currency": "USD",
+      "sku": "ALCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Almond",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 10
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Bone Linen Aluminum",
+      "price": 21.02,
+      "currency": "USD",
+      "sku": "LNCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Bone%20Linen",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 11
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Pearl Gray Aluminum",
+      "price": 21.02,
+      "currency": "USD",
+      "sku": "PGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Pearl%20Gray",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 12
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Black Aluminum",
+      "price": 25.42,
+      "currency": "USD",
+      "sku": "BLCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Black",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 13
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Galvanized",
+      "price": 16.45,
+      "currency": "USD",
+      "sku": "GACSC5XGXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Galvanized%20Steel&size=5%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 14
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Galvanized",
+      "price": 21.93,
+      "currency": "USD",
+      "sku": "GACSC6XGXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Galvanized%20Steel&size=6%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 15
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Copper",
+      "price": 23.25,
+      "currency": "USD",
+      "sku": "COCSC5XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Copper&size=5%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 16
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Copper",
+      "price": 28.87,
+      "currency": "USD",
+      "sku": "COCSC6XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Copper&size=6%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 17
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring. HG White Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "HGCSC5XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=5%22&color=HG%20White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 18
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spri Royal Brown Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "RBCSC5XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=5%22&color=Royal%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 19
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring. HG White Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "HGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=HG%20White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 20
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring. Mill Finish",
+      "price": null,
+      "currency": "USD",
+      "sku": "MICSC6XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Mill%20Finish%20Aluminum&size=6%22&color=",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 21
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Roy Brown Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "RBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Royal%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 22
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Dk. Bronze Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "DBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Dark%20Bronze",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 23
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Grecian Green Alum.",
+      "price": null,
+      "currency": "USD",
+      "sku": "GGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Grecian%20Green",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 24
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Natural Clay Alum.",
+      "price": null,
+      "currency": "USD",
+      "sku": "NCCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Natural%20Clay",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 25
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. White Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "WHCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=White",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 26
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Musket Brown Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "MBCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Musket%20Brown",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 27
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Almond Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "ALCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Almond",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 28
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Bone Linen Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "LNCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Bone%20Linen",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 29
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "Pearl Gray Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "PGCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Pearl%20Gray",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 30
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/Spring. Black Aluminum",
+      "price": null,
+      "currency": "USD",
+      "sku": "BLCSC6XAXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Painted%20Aluminum&size=6%22&color=Black",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 31
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Galvanized",
+      "price": null,
+      "currency": "USD",
+      "sku": "GACSC5XGXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Galvanized%20Steel&size=5%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 32
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Galvanized",
+      "price": null,
+      "currency": "USD",
+      "sku": "GACSC6XGXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Galvanized%20Steel&size=6%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 33
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "5 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Copper",
+      "price": null,
+      "currency": "USD",
+      "sku": "COCSC5XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Copper&size=5%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 34
+    }
+  },
+  {
+    "json": {
+      "website": "guttersupply.com",
+      "productName": "6 #10 Combo Shank & Circle",
+      "description": "w/ Spring, Copper",
+      "price": null,
+      "currency": "USD",
+      "sku": "COCSC6XCXXX",
+      "inStock": true,
+      "url": "https://www.guttersupply.com/p/10-combo-shank-and-circle-gutter-hanger?material=Copper&size=6%22&color=N/A",
+      "timestamp": "2025-11-02T23:54:21.153Z"
+    },
+    "pairedItem": {
+      "item": 35
+    }
+  }
+]
