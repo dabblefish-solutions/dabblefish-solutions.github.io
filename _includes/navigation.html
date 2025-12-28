@@ -6,10 +6,8 @@
                 <div class="flex items-baseline">
                     <a href="{{ '/' | relative_url }}" class="text-light text-3xl font-bold">{{ site.title }}</a>
                     {% if page.section %}
-                        {% if page.section == 'works / data' %}
-                            <span class="text-light text-xl ml-2">/ <a href="/works" class="text-light">works</a> / data</span>
-                        {% elsif page.section == 'works / ai' %}
-                            <span class="text-light text-xl ml-2">/ <a href="/works" class="text-light">works</a> / ai</span>
+                        {% if page.section == 'services / n8n' %}
+                            <span class="text-light text-xl ml-2">/ <a href="/services" class="text-light">services</a> / n8n</span>
                         {% else %}
                             <span class="text-light text-xl ml-2">/ {{ page.section }}</span>
                         {% endif %}
@@ -28,12 +26,16 @@
         <!-- Menu -->
         <div class="menu hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 text-right">
-                <a href="{{ '/thoughts' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
-                    <span class="mr-2">thoughts</span>
+                <a href="{{ '/services' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <span class="mr-2">services</span>
                     {% include icon.html name="arrow" color="text-white opacity-0 group-hover:opacity-100 transition-opacity" %}
                 </a>
-                <a href="{{ '/works' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
-                    <span class="mr-2">works</span>
+                <a href="{{ '/projects' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <span class="mr-2">projects</span>
+                    {% include icon.html name="arrow" color="text-white opacity-0 group-hover:opacity-100 transition-opacity" %}
+                </a>
+                <a href="{{ '/posts' | relative_url }}" class="block text-light hover:text-white text-lg flex items-center justify-end group">
+                    <span class="mr-2">posts</span>
                     {% include icon.html name="arrow" color="text-white opacity-0 group-hover:opacity-100 transition-opacity" %}
                 </a>
             </div>
