@@ -1,7 +1,14 @@
 .DS_Store
 node_modules/
 .env
-*.log 
+*.log
+
+## Claude Code
+.claude/
+CLAUDE.md
+
+## Ruby
+.ruby-version
 
 ## Jekyll
 _site/
