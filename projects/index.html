@@ -9,10 +9,10 @@ section: projects
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-primary mb-12 text-center">Projects</h1>
 
-        <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             <!-- 5 Minute AI News Podcast -->
-            <a href="https://5minuteainews.com" target="_blank" rel="noopener noreferrer" class="block">
-                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral hover:border-primary transition-colors group">
+            <a href="https://5minuteainews.com" target="_blank" rel="noopener noreferrer" class="block h-full">
+                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral hover:border-primary transition-colors group h-full">
                     <div class="flex flex-col md:flex-row items-center gap-6">
                         <div class="w-32 h-32 flex-shrink-0">
                             <img src="/assets/images/5min-ai-news-logo.svg" alt="5 Minute AI News Logo" class="w-full h-full object-contain">
@@ -27,6 +27,30 @@ section: projects
                                 <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Podcast</span>
                                 <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">AI News</span>
                                 <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Daily</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Public Domain Archive -->
+            <a href="/projects/public_domain_archive/" class="block h-full">
+                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-neutral hover:border-primary transition-colors group h-full">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-32 h-32 flex-shrink-0">
+                            <img src="/assets/images/public-domain-archive-logo.svg" alt="Public Domain Archive Logo" class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h2 class="text-2xl font-bold mb-3 text-primary group-hover:text-primary-dark transition-colors flex items-center justify-center md:justify-start">
+                                <span>Public Domain Archive</span>
+                                {% include icon.html name="arrow" color="text-red-600 group-hover:text-primary-dark transition-colors ml-2" %}
+                            </h2>
+                            <p class="text-gray-600 mb-4">Discover humanity's shared cultural heritage. Browse public domain books, music, films, and art - free to use, share, and adapt.</p>
+                            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                                <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Literature</span>
+                                <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Music</span>
+                                <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Film</span>
+                                <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Art</span>
                             </div>
                         </div>
                     </div>

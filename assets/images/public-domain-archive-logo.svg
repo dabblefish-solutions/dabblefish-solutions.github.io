@@ -1,0 +1,17 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e6a3"/>
+      <stop offset="100%" style="stop-color:#d4af37"/>
+    </linearGradient>
+  </defs>
+  <!-- Page/scroll shape -->
+  <path d="M20 10 L70 10 L80 20 L80 90 L20 90 Z" fill="url(#pageGradient)" stroke="#aa8a2e" stroke-width="2"/>
+  <!-- Folded corner -->
+  <path d="M70 10 L70 20 L80 20" fill="#e8d48a" stroke="#aa8a2e" stroke-width="1.5"/>
+  <!-- Text lines -->
+  <line x1="30" y1="35" x2="70" y2="35" stroke="#8b7355" stroke-width="3" stroke-linecap="round"/>
+  <line x1="30" y1="48" x2="65" y2="48" stroke="#8b7355" stroke-width="3" stroke-linecap="round"/>
+  <line x1="30" y1="61" x2="70" y2="61" stroke="#8b7355" stroke-width="3" stroke-linecap="round"/>
+  <line x1="30" y1="74" x2="55" y2="74" stroke="#8b7355" stroke-width="3" stroke-linecap="round"/>
+</svg>
