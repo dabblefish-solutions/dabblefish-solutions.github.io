@@ -296,7 +296,7 @@ def fetch_gutenberg_works(existing_works, limit=30):
         author = re.sub(r'\d{4}-\d{4}', '', author).strip()
 
         # Extract year from title if present
-        year = 1900  # Default
+        year = None  # Will require manual review
 
         ebook_id = row.get('Text#', '')
 
@@ -374,10 +374,15 @@ def fetch_standard_ebooks(existing_works, limit=20):
         description = entry.get('summary', '')[:200]
 
         # Try to get year from description
-        year = 1900
+        year = None
         year_match = re.search(r'\b(1[0-9]{3})\b', description)
         if year_match:
             year = int(year_match.group(1))
+        # Fallback: try to extract from title
+        if year is None:
+            year_match = re.search(r'\b(1[0-9]{3})\b', title)
+            if year_match:
+                year = int(year_match.group(1))
 
         subcategory = guess_subcategory(title, description, 'literature')
 
@@ -539,12 +544,14 @@ def fetch_wikimedia_art(existing_works, limit=20):
             description = BeautifulSoup(description, 'html.parser').get_text()
         description = description[:200]
 
-        # Get year
-        date_str = metadata.get('DateTimeOriginal', {}).get('value', '')
-        year = 1800
-        year_match = re.search(r'\b(1[0-9]{3})\b', date_str)
-        if year_match:
-            year = int(year_match.group(1))
+        # Get year - try multiple metadata fields
+        year = None
+        for field in ['DateTimeOriginal', 'DateTime', 'Date']:
+            date_str = metadata.get(field, {}).get('value', '')
+            year_match = re.search(r'\b(1[0-9]{3})\b', date_str)
+            if year_match:
+                year = int(year_match.group(1))
+                break
 
         url = imageinfo.get('descriptionurl', '')
 
@@ -633,8 +640,8 @@ def fetch_imslp_music(existing_works, limit=20):
                 parts = creator.split(',', 1)
                 creator = f"{parts[1].strip()} {parts[0].strip()}"
 
-        # Default year (will need manual correction)
-        year = 1800
+        # Default year - null indicates need for manual review
+        year = None
 
         url = f"https://imslp.org/wiki/{title.replace(' ', '_')}"
 
