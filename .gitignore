@@ -4,8 +4,7 @@ node_modules/
 *.log
 
 ## Claude Code
-.claude/
-CLAUDE.md
+.claude/settings.local.json
 
 ## Ruby
 .ruby-version
