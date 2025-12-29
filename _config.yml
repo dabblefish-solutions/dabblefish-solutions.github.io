@@ -9,6 +9,19 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+# Exclude from build (won't be deployed)
+exclude:
+  - projects/public_domain_archive/scripts
+  - projects/public_domain_archive/README.md
+  - projects/public_domain_archive/public-domain-archive-static-plan.md
+  - projects/public_domain_archive/pyproject.toml
+  - projects/public_domain_archive/.venv
+  - projects/public_domain_archive/.python-version
+  - projects/public_domain_archive/uv.lock
+  - projects/public_domain_archive/hello.py
+  - projects/public_domain_archive/main.py
+  - projects/public_domain_archive/scripts/backups
+
 # Theme settings
 theme_settings:
   nintendo_colors:

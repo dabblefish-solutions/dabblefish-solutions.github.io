@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Public Domain Archive | Free Cultural Works</title>
+    <meta name="description" content="Discover humanity's shared cultural heritage. Browse thousands of public domain books, music, films, art, and software—free to use, share, and adapt.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Public Domain Archive">
+    <meta property="og:description" content="Discover humanity's shared cultural heritage. Browse public domain books, music, films, art, and software.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.dabblefish.com/projects/public_domain_archive/">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Fuse.js for client-side search -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f0f23;
+            --bg-card: rgba(42, 42, 78, 0.7);
+            --gold: #d4af37;
+            --gold-dark: #aa8a2e;
+            --gold-light: #f4d03f;
+            --text-primary: #e8e6e3;
+            --text-secondary: #a0a0b0;
+            --text-muted: #8a8aa3;
+            --text-dim: #6a6a8a;
+            --border-subtle: rgba(212, 175, 55, 0.15);
+            --border-medium: rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Crimson Pro', Georgia, serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: #4a4a6a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6a6a8a; }
+
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Header */
+        .header {
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-medium);
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: rgba(212, 175, 55, 0.08);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 2rem;
+            display: none;
+        }
+
+        .info-panel.active {
+            display: block;
+        }
+
+        .info-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card h3 {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Search & Filters */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--border-medium);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            opacity: 0.5;
+        }
+
+        .filter-select {
+            padding: 0.9rem 2.5rem 0.9rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4af37' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .filter-select option {
+            background: var(--bg-primary);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.7rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.6rem 1rem;
+            background: rgba(42, 42, 78, 0.4);
+            border: 1px solid rgba(100, 100, 130, 0.2);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab:hover {
+            border-color: var(--border-medium);
+        }
+
+        .category-tab.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(170, 138, 46, 0.2));
+            border-color: rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+        }
+
+        .category-count {
+            background: rgba(100, 100, 130, 0.3);
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+        }
+
+        .category-tab.active .category-count {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Subcategory Tabs */
+        .subcategory-tabs {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border-medium);
+        }
+
+        .subcategory-tab {
+            padding: 0.4rem 0.8rem;
+            background: rgba(30, 30, 50, 0.5);
+            border: 1px solid rgba(80, 80, 110, 0.3);
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .subcategory-tab:hover {
+            border-color: var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .subcategory-tab.active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+        }
+
+        .subcategory-tab .category-count {
+            background: rgba(80, 80, 110, 0.4);
+            padding: 0.1rem 0.3rem;
+            border-radius: 6px;
+            font-size: 0.65rem;
+        }
+
+        .subcategory-tab.active .category-count {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Results Info */
+        .results-info {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .results-info strong {
+            color: var(--gold);
+        }
+
+        /* Works Grid */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .works-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        /* Work Card */
+        .work-card {
+            background: linear-gradient(145deg, rgba(42, 42, 78, 0.7), rgba(32, 32, 58, 0.8));
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-medium);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .works-grid.list-view .work-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .works-grid.list-view .card-header {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(170, 138, 46, 0.1));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .card-meta {
+            flex: 1;
+        }
+
+        .card-format {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+
+        .card-country {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-left: 0.5rem;
+        }
+
+        .card-body {
+            flex: 1;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+        }
+
+        .card-creator {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-year {
+            color: var(--gold);
+        }
+
+        .card-description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .works-grid.list-view .card-description {
+            display: none;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(100, 100, 130, 0.2);
+        }
+
+        .works-grid.list-view .card-footer {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .card-source {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .card-link {
+            padding: 0.5rem 1rem;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--border-medium);
+            border-radius: 6px;
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .card-link:hover {
+            background: rgba(212, 175, 55, 0.25);
+            text-decoration: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-secondary);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Featured Section */
+        .featured {
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .featured-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .featured-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2a2a4e, #3a3a5e);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 2px solid var(--border-medium);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .featured-text {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .featured-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .featured-meta {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 600px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            background: rgba(15, 15, 35, 0.5);
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-section li a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(100, 100, 130, 0.2);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 1rem;
+            }
+
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+
+            .main {
+                padding: 1.5rem 1rem;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+            .featured-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .loading-card {
+            height: 200px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #2a2a4e 25%, #3a3a5e 50%, #2a2a4e 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-section">
+                <div class="logo-icon">📜</div>
+                <div class="logo-text">
+                    <h1>The Public Domain Archive</h1>
+                    <p>A Living Catalog of Free Culture</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn" id="infoToggle">ℹ About Public Domain</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>What is Public Domain?</h3>
+                <p>Works in the public domain are free from copyright restrictions. Anyone can use, share, adapt, or build upon them without permission or payment.</p>
+            </div>
+            <div class="info-card">
+                <h3>US Copyright Rules (2025)</h3>
+                <p>Works published before <strong>January 1, 1929</strong> are in the public domain in the US. Each year on January 1st, works from 95+ years ago enter the public domain.</p>
+            </div>
+            <div class="info-card">
+                <h3>Data Sources</h3>
+                <p>This catalog aggregates from Project Gutenberg, Internet Archive, IMSLP, Wikimedia Commons, and other trusted repositories of public domain content.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="featured" id="featuredSection">
+        <div class="featured-inner">
+            <div class="featured-label">✦ Featured Work</div>
+            <div class="featured-content">
+                <div class="featured-icon" id="featuredIcon">📖</div>
+                <div class="featured-text">
+                    <h2 class="featured-title" id="featuredTitle">Loading...</h2>
+                    <p class="featured-meta" id="featuredMeta"></p>
+                    <p class="featured-description" id="featuredDescription"></p>
+                </div>
+                <a href="#" class="btn btn-primary" id="featuredLink" target="_blank" rel="noopener">Access Work →</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="main">
+        <div class="controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search titles, creators, or descriptions...">
+            </div>
+            <select class="filter-select" id="yearFilter">
+                <option value="all">All Eras</option>
+                <option value="ancient">Ancient (pre-1500)</option>
+                <option value="1500-1800">1500 – 1800</option>
+                <option value="1800-1900">1800 – 1900</option>
+                <option value="1900-1950">1900 – 1950</option>
+                <option value="1950+">1950+</option>
+            </select>
+            <div class="view-toggle">
+                <button class="view-btn active" id="gridViewBtn" title="Grid view">▦</button>
+                <button class="view-btn" id="listViewBtn" title="List view">☰</button>
+            </div>
+        </div>
+
+        <div class="category-tabs" id="categoryTabs"></div>
+        <div class="subcategory-tabs" id="subcategoryTabs" style="display: none;"></div>
+
+        <p class="results-info" id="resultsInfo">Loading works...</p>
+
+        <div class="works-grid" id="worksGrid"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-section">
+                <h4>📜 The Public Domain Archive</h4>
+                <p>Celebrating humanity's shared cultural heritage by making public domain works discoverable and accessible to all.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Primary Sources</h4>
+                <ul>
+                    <li><a href="https://www.gutenberg.org" target="_blank" rel="noopener">→ Project Gutenberg</a></li>
+                    <li><a href="https://archive.org" target="_blank" rel="noopener">→ Internet Archive</a></li>
+                    <li><a href="https://imslp.org" target="_blank" rel="noopener">→ IMSLP (Music)</a></li>
+                    <li><a href="https://commons.wikimedia.org" target="_blank" rel="noopener">→ Wikimedia Commons</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Public Domain Day 2025</h4>
+                <p>On January 1, 2025, works from 1929 entered the public domain in the US, including works by Virginia Woolf, Ernest Hemingway, and more!</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>This catalog is itself in the public domain. Use freely, share widely, build upon.</p>
+            <p class="mono" style="margin-top: 0.5rem;">Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // PUBLIC DOMAIN WORKS DATABASE
+        // Update this array weekly with new works
+        // ============================================
+        const WORKS_DATA = [
+            {
+                        "id": 304,
+                        "title": "Girl with a Pearl Earring",
+                        "creator": "Johannes Vermeer",
+                        "year": 1665,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Girl_with_a_Pearl_Earring.jpg",
+                        "description": "Dutch Golden Age masterpiece, called 'the Mona Lisa of the North'.",
+                        "country": "Netherlands",
+                        "format": "Oil Painting"
+            },
+            {
+                        "id": 301,
+                        "title": "Mona Lisa",
+                        "creator": "Leonardo da Vinci",
+                        "year": 1519,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mona_Lisa_-_the_Louvre.jpg",
+                        "description": "The world's most famous portrait with an enigmatic smile.",
+                        "country": "Italy",
+                        "format": "Oil Painting"
+            },
+            {
+                        "id": 305,
+                        "title": "The Birth of Venus",
+                        "creator": "Sandro Botticelli",
+                        "year": 1485,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project.jpg",
+                        "description": "Renaissance depiction of Venus emerging from the sea.",
+                        "country": "Italy",
+                        "format": "Tempera"
+            },
+            {
+                        "id": 311,
+                        "title": "The Creation of Adam",
+                        "creator": "Michelangelo",
+                        "year": 1512,
+                        "category": "art",
+                        "subcategory": "murals",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Michelangelo_-_Creation_of_Adam_(cropped).jpg",
+                        "description": "Sistine Chapel ceiling fresco of God giving life to Adam.",
+                        "country": "Italy",
+                        "format": "Fresco"
+            },
+            {
+                        "id": 303,
+                        "title": "The Great Wave off Kanagawa",
+                        "creator": "Katsushika Hokusai",
+                        "year": 1831,
+                        "category": "art",
+                        "subcategory": "prints",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tsunami_by_hokusai_19th_century.jpg",
+                        "description": "Iconic woodblock print of a towering wave with Mount Fuji.",
+                        "country": "Japan",
+                        "format": "Woodblock Print"
+            },
+            {
+                        "id": 310,
+                        "title": "The Last Supper",
+                        "creator": "Leonardo da Vinci",
+                        "year": 1498,
+                        "category": "art",
+                        "subcategory": "murals",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_The_Last_Supper_high_res.jpg",
+                        "description": "Monumental mural depicting Jesus's final meal with his disciples.",
+                        "country": "Italy",
+                        "format": "Mural"
+            },
+            {
+                        "id": 307,
+                        "title": "The Scream",
+                        "creator": "Edvard Munch",
+                        "year": 1893,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Scream.jpg",
+                        "description": "Expressionist icon of existential anxiety and dread.",
+                        "country": "Norway",
+                        "format": "Oil/Tempera/Pastel"
+            },
+            {
+                        "id": 302,
+                        "title": "The Starry Night",
+                        "creator": "Vincent van Gogh",
+                        "year": 1889,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+                        "description": "Swirling night sky over Saint-Rémy-de-Provence.",
+                        "country": "Netherlands",
+                        "format": "Oil Painting"
+            },
+            {
+                        "id": 308,
+                        "title": "Water Lilies Series",
+                        "creator": "Claude Monet",
+                        "year": 1906,
+                        "category": "art",
+                        "subcategory": "paintings",
+                        "source": "Wikimedia Commons",
+                        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Water_Lilies_-_1906,_Ryerson.jpg",
+                        "description": "Impressionist masterpieces of Monet's garden at Giverny.",
+                        "country": "France",
+                        "format": "Oil Painting"
+            },
+            {
+                        "id": 204,
+                        "title": "A Trip to the Moon",
+                        "creator": "Georges Méliès",
+                        "year": 1902,
+                        "category": "film",
+                        "subcategory": "silent",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/LeVoyageDansLaLune",
+                        "description": "Pioneering science fiction film with iconic imagery.",
+                        "country": "France",
+                        "format": "Silent Film"
+            },
+            {
+                        "id": 209,
+                        "title": "Battleship Potemkin",
+                        "creator": "Sergei Eisenstein",
+                        "year": 1925,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/BattleshipPotemkin",
+                        "description": "Revolutionary Soviet film famous for its editing techniques.",
+                        "country": "Russia",
+                        "format": "Silent Drama"
+            },
+            {
+                        "id": 215,
+                        "title": "CUKESIM's New Job! ( Charles Chaplin-1915)",
+                        "creator": "Unknown",
+                        "year": 1920,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/HisNewJobCharlesChaplin-1915",
+                        "description": "Public domain film available for streaming and download.",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 211,
+                        "title": "Charade",
+                        "creator": "Stanley Donen",
+                        "year": 1963,
+                        "category": "film",
+                        "subcategory": "thriller",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/Charade1963",
+                        "description": "Romantic thriller with Audrey Hepburn and Cary Grant.",
+                        "country": "USA",
+                        "format": "Thriller"
+            },
+            {
+                        "id": 217,
+                        "title": "Charlie Chaplin Festival",
+                        "creator": "Unknown",
+                        "year": 1938,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/charlie_chaplin_film_fest",
+                        "description": "Four Chaplin shorts from 1917: The Adventurer, The Cure, Easy Street and The Immigrant, presented with music and sound effects. You can find more information regarding this film on its IMDb page .",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 212,
+                        "title": "D.O.A.",
+                        "creator": "Rudolph Maté",
+                        "year": 1949,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/D.O.A.1949",
+                        "description": "Film noir about a man investigating his own murder.",
+                        "country": "USA",
+                        "format": "Film Noir"
+            },
+            {
+                        "id": 220,
+                        "title": "Dr. Sex.",
+                        "creator": "Unknown",
+                        "year": 1920,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/Dr.Sex",
+                        "description": "[1964] Three sex researchers discuss their wildest cases, as told to them by their patients. A \"Nudie Cutie\" exploitation movie . The story is just a reason to look at nude women.",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 210,
+                        "title": "His Girl Friday",
+                        "creator": "Howard Hawks",
+                        "year": 1940,
+                        "category": "film",
+                        "subcategory": "comedy",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/HisGirlFriday1940",
+                        "description": "Screwball comedy classic with rapid-fire dialogue.",
+                        "country": "USA",
+                        "format": "Comedy"
+            },
+            {
+                        "id": 222,
+                        "title": "House on Haunted Hill",
+                        "creator": "William Castle",
+                        "year": 1959,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/house_on_haunted_hill_ipod",
+                        "description": "Frederick Loren has invited five strangers to a party of a lifetime. He is offering each of them $10,000 if they can stay the night in a house.",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 223,
+                        "title": "Jungle Book",
+                        "creator": "Alexander Korda",
+                        "year": 1942,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/JungleBook",
+                        "description": "Teenaged Mowgli, who was raised by wolves, appears in a village in India and is adopted by Messua. Mowgli learns human language and some human ways quickly, though keeping jungle ideas. Influential Me...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 206,
+                        "title": "Metropolis",
+                        "creator": "Fritz Lang",
+                        "year": 1927,
+                        "category": "film",
+                        "subcategory": "silent",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/Metropolis1927",
+                        "description": "Visionary sci-fi depicting a futuristic urban dystopia.",
+                        "country": "Germany",
+                        "format": "Silent Film"
+            },
+            {
+                        "id": 203,
+                        "title": "Night of the Living Dead",
+                        "creator": "George A. Romero",
+                        "year": 1968,
+                        "category": "film",
+                        "subcategory": "horror",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/night_of_the_living_dead",
+                        "description": "Genre-defining zombie horror film that launched a franchise.",
+                        "country": "USA",
+                        "format": "Horror"
+            },
+            {
+                        "id": 201,
+                        "title": "Nosferatu",
+                        "creator": "F.W. Murnau",
+                        "year": 1922,
+                        "category": "film",
+                        "subcategory": "horror",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/nosferatu1922",
+                        "description": "Unauthorized adaptation of Dracula; German Expressionist horror masterpiece.",
+                        "country": "Germany",
+                        "format": "Silent Film"
+            },
+            {
+                        "id": 224,
+                        "title": "Reefer Madness",
+                        "creator": "George A. Hirliman",
+                        "year": 1938,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/reefer_madness1938",
+                        "description": "Considered THE archetypal sensationalized anti-drug movie, but it's really an exploitation film made to capitalize on the hot taboo subject of marijuana use. Like many exploitation films of the time, ...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 219,
+                        "title": "Return of the Kung Fu Dragon",
+                        "creator": "Unknown",
+                        "year": 1976,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/Return_of_the_Kung_Fu_Dragon",
+                        "description": "The complicated story involves the military conquest of a peaceful island-nation by an evil despot and his sorcerer ally. His victory leaves the island's three heroic protectors dead, but, their young...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 207,
+                        "title": "Safety Last!",
+                        "creator": "Fred C. Newmeyer",
+                        "year": 1923,
+                        "category": "film",
+                        "subcategory": "comedy",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/SafetyLast1923",
+                        "description": "Harold Lloyd's famous clock-hanging silent comedy.",
+                        "country": "USA",
+                        "format": "Silent Comedy"
+            },
+            {
+                        "id": 216,
+                        "title": "Sex Madness",
+                        "creator": "Unknown",
+                        "year": 1938,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/sex_madness",
+                        "description": "This is a typical sex exploitation film from the early 1930s - complete with wild parties, sex out of wedlock, lesbianism, etc. A chorus girl's exposure to the \"casting couch\" also exposes her to syph...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 214,
+                        "title": "Sherlock Jr.",
+                        "creator": "Buster Keaton",
+                        "year": 1924,
+                        "category": "film",
+                        "subcategory": "comedy",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/SherlockJr",
+                        "description": "Inventive comedy about a projectionist who dreams himself into a film.",
+                        "country": "USA",
+                        "format": "Silent Comedy"
+            },
+            {
+                        "id": 202,
+                        "title": "The Cabinet of Dr. Caligari",
+                        "creator": "Robert Wiene",
+                        "year": 1920,
+                        "category": "film",
+                        "subcategory": "horror",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/thecabinetofdr.caligari",
+                        "description": "Landmark of German Expressionist cinema with twisted visuals.",
+                        "country": "Germany",
+                        "format": "Silent Film"
+            },
+            {
+                        "id": 218,
+                        "title": "The Fast And The Furious",
+                        "creator": "Roger Corman",
+                        "year": 1955,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/TheFastandtheFuriousJohnIreland1954goofyrip",
+                        "description": "http://imdb.com/title/tt0046969/ A man wrongly imprisoned for murder (John Ireland) breaks out of jail. He wants to clear his name, but with the police pursuing him, he's forced to take a beautiful yo...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 205,
+                        "title": "The General",
+                        "creator": "Buster Keaton",
+                        "year": 1926,
+                        "category": "film",
+                        "subcategory": "comedy",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/TheGeneral1926",
+                        "description": "Silent comedy masterpiece set during the American Civil War.",
+                        "country": "USA",
+                        "format": "Silent Comedy"
+            },
+            {
+                        "id": 213,
+                        "title": "The Kid",
+                        "creator": "Charlie Chaplin",
+                        "year": 1921,
+                        "category": "film",
+                        "subcategory": "comedy",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/TheKid1921",
+                        "description": "Chaplin's first feature-length film as director.",
+                        "country": "USA",
+                        "format": "Silent Comedy"
+            },
+            {
+                        "id": 208,
+                        "title": "The Phantom of the Opera",
+                        "creator": "Rupert Julian",
+                        "year": 1925,
+                        "category": "film",
+                        "subcategory": "horror",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/ThePhantomOfTheOpera1925",
+                        "description": "Lon Chaney's iconic portrayal of the disfigured phantom.",
+                        "country": "USA",
+                        "format": "Silent Horror"
+            },
+            {
+                        "id": 221,
+                        "title": "Voyage to the Planet of Prehistoric Women",
+                        "creator": "Norman D. Wells",
+                        "year": 1967,
+                        "category": "film",
+                        "subcategory": "drama",
+                        "source": "Internet Archive",
+                        "sourceUrl": "https://archive.org/details/VoyagetothePlanetofPrehistoricWomen",
+                        "description": "A team of astronauts crashes on the surface of Venus. Accompanied by their robot, they explore the surface and end up destroying the Venusian God. This film is also known as \"The Gill Women\" and \"The ...",
+                        "country": "USA",
+                        "format": "Film"
+            },
+            {
+                        "id": 12,
+                        "title": "A Tale of Two Cities",
+                        "creator": "Charles Dickens",
+                        "year": 1859,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/98",
+                        "description": "A story of sacrifice and resurrection set during the French Revolution.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 28,
+                        "title": "Abraham Lincoln's First Inaugural Address",
+                        "creator": "Abraham Lincoln",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/9",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 27,
+                        "title": "Abraham Lincoln's Second Inaugural Address",
+                        "creator": "Abraham Lincoln",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/8",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 29,
+                        "title": "Alice's Adventures in Wonderland",
+                        "creator": "Lewis Carroll",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/11",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 19,
+                        "title": "Anna Karenina",
+                        "creator": "Leo Tolstoy",
+                        "year": 1877,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1399",
+                        "description": "A tragic love affair set against Russian aristocratic society.",
+                        "country": "Russia",
+                        "format": "Novel"
+            },
+            {
+                        "id": 5,
+                        "title": "Crime and Punishment",
+                        "creator": "Fyodor Dostoevsky",
+                        "year": 1866,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/2554",
+                        "description": "A psychological drama exploring guilt, redemption, and the nature of morality.",
+                        "country": "Russia",
+                        "format": "Novel"
+            },
+            {
+                        "id": 8,
+                        "title": "Don Quixote",
+                        "creator": "Miguel de Cervantes",
+                        "year": 1605,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/996",
+                        "description": "The adventures of a man who believes himself to be a knight-errant.",
+                        "country": "Spain",
+                        "format": "Novel"
+            },
+            {
+                        "id": 11,
+                        "title": "Dracula",
+                        "creator": "Bram Stoker",
+                        "year": 1897,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/345",
+                        "description": "The classic vampire novel told through letters, diary entries, and newspaper clippings.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 3,
+                        "title": "Frankenstein",
+                        "creator": "Mary Shelley",
+                        "year": 1818,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/84",
+                        "description": "A Gothic tale of a scientist who creates a sapient creature through an unorthodox experiment.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 33,
+                        "title": "Futility",
+                        "creator": "William Gerhardie",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/william-gerhardie/futility",
+                        "description": "An English man befriends three young women from a soon-to-be-wealthy Russian family.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 26,
+                        "title": "Give Me Liberty or Give Me Death",
+                        "creator": "Patrick Henry",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/6",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 16,
+                        "title": "Jane Eyre",
+                        "creator": "Charlotte Brontë",
+                        "year": 1847,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1260",
+                        "description": "A governess's journey of independence, morality, and love.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 23,
+                        "title": "John F. Kennedy's Inaugural Address",
+                        "creator": "John F. (John Fitzgerald) Kennedy",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/3",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 14,
+                        "title": "Les Misérables",
+                        "creator": "Victor Hugo",
+                        "year": 1862,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/135",
+                        "description": "An epic tale of redemption and revolution in 19th-century France.",
+                        "country": "France",
+                        "format": "Novel"
+            },
+            {
+                        "id": 24,
+                        "title": "Lincoln's Gettysburg Address\r\nGiven November 19, 1863 on the battlefield near Gettysburg, Pennsylvania, USA",
+                        "creator": "Abraham Lincoln",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/4",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 2,
+                        "title": "Moby-Dick",
+                        "creator": "Herman Melville",
+                        "year": 1851,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/2701",
+                        "description": "The saga of Captain Ahab's obsessive quest to kill the white whale that maimed him.",
+                        "country": "USA",
+                        "format": "Novel"
+            },
+            {
+                        "id": 35,
+                        "title": "Payment Deferred",
+                        "creator": "C. S. Forester",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/c-s-forester/payment-deferred",
+                        "description": "A family man desperate for money murders a rich relative, and has to deal with the consequences.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 36,
+                        "title": "Plum Bun",
+                        "creator": "Jessie Redmon Fauset",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/jessie-redmon-fauset/plum-bun",
+                        "description": "A light-skinned African-American woman passes as white when she launches her artistic career in New York City.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 1,
+                        "title": "Pride and Prejudice",
+                        "creator": "Jane Austen",
+                        "year": 1813,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1342",
+                        "description": "A romantic novel following Elizabeth Bennet as she navigates issues of manners, morality, and marriage in Regency-era England.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 40,
+                        "title": "Short Fiction",
+                        "creator": "Mary Shelley",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/mary-shelley/short-fiction",
+                        "description": "A collection of short fiction by Mary Shelley, ordered by date of publication.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 4,
+                        "title": "The Adventures of Sherlock Holmes",
+                        "creator": "Arthur Conan Doyle",
+                        "year": 1892,
+                        "category": "literature",
+                        "subcategory": "short-stories",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1661",
+                        "description": "Twelve short stories featuring the legendary detective and his companion Dr. Watson.",
+                        "country": "UK",
+                        "format": "Short Stories"
+            },
+            {
+                        "id": 13,
+                        "title": "The Brothers Karamazov",
+                        "creator": "Fyodor Dostoevsky",
+                        "year": 1880,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/28054",
+                        "description": "A philosophical drama exploring faith, doubt, reason, and free will.",
+                        "country": "Russia",
+                        "format": "Novel"
+            },
+            {
+                        "id": 18,
+                        "title": "The Count of Monte Cristo",
+                        "creator": "Alexandre Dumas",
+                        "year": 1844,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1184",
+                        "description": "An epic tale of wrongful imprisonment, escape, and elaborate revenge.",
+                        "country": "France",
+                        "format": "Novel"
+            },
+            {
+                        "id": 21,
+                        "title": "The Declaration of Independence of the United States of America",
+                        "creator": "Thomas Jefferson",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 10,
+                        "title": "The Divine Comedy",
+                        "creator": "Dante Alighieri",
+                        "year": 1320,
+                        "category": "literature",
+                        "subcategory": "poetry",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/8800",
+                        "description": "An allegorical journey through Hell, Purgatory, and Paradise.",
+                        "country": "Italy",
+                        "format": "Epic Poetry"
+            },
+            {
+                        "id": 6,
+                        "title": "The Great Gatsby",
+                        "creator": "F. Scott Fitzgerald",
+                        "year": 1925,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/64317",
+                        "description": "A portrait of the Jazz Age and the corruption of the American Dream.",
+                        "country": "USA",
+                        "format": "Novel"
+            },
+            {
+                        "id": 20,
+                        "title": "The Iliad",
+                        "creator": "Homer",
+                        "year": -750,
+                        "category": "literature",
+                        "subcategory": "poetry",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/6130",
+                        "description": "Epic poem of the Trojan War focusing on the hero Achilles.",
+                        "country": "Greece",
+                        "format": "Epic Poetry"
+            },
+            {
+                        "id": 38,
+                        "title": "The Journal of a Disappointed Man",
+                        "creator": "W. N. P. Barbellion",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/w-n-p-barbellion/the-journal-of-a-disappointed-man",
+                        "description": "A young naturalist with multiple sclerosis describes his life and love of nature.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 32,
+                        "title": "The Law and the Lady",
+                        "creator": "Wilkie Collins",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/wilkie-collins/the-law-and-the-lady",
+                        "description": "After a young woman discovers that her husband is concealing a terrible secret, she vows to discover the truth.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 31,
+                        "title": "The Lone Wolf",
+                        "creator": "Louis Joseph Vance",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/louis-joseph-vance/the-lone-wolf",
+                        "description": "A skilled thief, pursued for his past crimes, is faced with a choice between love or a life of crime.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 7,
+                        "title": "The Odyssey",
+                        "creator": "Homer",
+                        "year": -800,
+                        "category": "literature",
+                        "subcategory": "poetry",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/1727",
+                        "description": "Epic poem following Odysseus's perilous journey home after the Trojan War.",
+                        "country": "Greece",
+                        "format": "Epic Poetry"
+            },
+            {
+                        "id": 37,
+                        "title": "The Patient in Room 18",
+                        "creator": "Mignon G. Eberhart",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/mignon-g-eberhart/the-patient-in-room-18",
+                        "description": "A nurse helps a detective investigate a murder in a hospital.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 17,
+                        "title": "The Picture of Dorian Gray",
+                        "creator": "Oscar Wilde",
+                        "year": 1890,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/174",
+                        "description": "A man remains young while his portrait ages and reflects his sins.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 34,
+                        "title": "The Powerhouse",
+                        "creator": "John Buchan",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/john-buchan/the-powerhouse",
+                        "description": "A secret criminal organization is uncovered after an M.P.’s friend goes missing.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 39,
+                        "title": "The Roots of the Mountains",
+                        "creator": "William Morris",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Standard eBooks",
+                        "sourceUrl": "https://standardebooks.org/ebooks/william-morris/the-roots-of-the-mountains",
+                        "description": "The peoples of the dales and woods must unite to defeat a foe intent on enslaving them.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 22,
+                        "title": "The United States Bill of Rights\r\nThe Ten Original Amendments to the Constitution of the United States",
+                        "creator": "United States",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/2",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 25,
+                        "title": "The United States Constitution",
+                        "creator": "United States",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/5",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 30,
+                        "title": "Through the Looking-Glass",
+                        "creator": "Lewis Carroll",
+                        "year": 1900,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/12",
+                        "description": "Classic literature available in multiple formats.",
+                        "country": "Various",
+                        "format": "Novel"
+            },
+            {
+                        "id": 9,
+                        "title": "War and Peace",
+                        "creator": "Leo Tolstoy",
+                        "year": 1869,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/2600",
+                        "description": "An epic chronicle of Russian society during the Napoleonic era.",
+                        "country": "Russia",
+                        "format": "Novel"
+            },
+            {
+                        "id": 15,
+                        "title": "Wuthering Heights",
+                        "creator": "Emily Brontë",
+                        "year": 1847,
+                        "category": "literature",
+                        "subcategory": "novels",
+                        "source": "Project Gutenberg",
+                        "sourceUrl": "https://www.gutenberg.org/ebooks/768",
+                        "description": "A dark tale of passion and revenge on the Yorkshire moors.",
+                        "country": "UK",
+                        "format": "Novel"
+            },
+            {
+                        "id": 113,
+                        "title": "Abbé Stadler, WoO 178",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Abbé_Stadler,_WoO_178_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 114,
+                        "title": "Abendlied unter'm gestirnten Himmel, WoO 150",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Abendlied_unter'm_gestirnten_Himmel,_WoO_150_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 115,
+                        "title": "Abschiedsgesang an Wiens Bürger, WoO 121",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Abschiedsgesang_an_Wiens_Bürger,_WoO_121_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 116,
+                        "title": "Abschiedsgesang, WoO 102",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Abschiedsgesang,_WoO_102_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 117,
+                        "title": "Adagio for Mandolin and Harpsichord, WoO 43b",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Adagio_for_Mandolin_and_Harpsichord,_WoO_43b_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 118,
+                        "title": "Adelaide, Op.46",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Adelaide,_Op.46_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 119,
+                        "title": "Ah! Perfido, Op.65",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Ah!_Perfido,_Op.65_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 120,
+                        "title": "Allegretto, Hess 48",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Allegretto,_Hess_48_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 121,
+                        "title": "Allegretto, WoO 39",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Allegretto,_WoO_39_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 122,
+                        "title": "Allegretto, WoO 53",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1800,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Allegretto,_WoO_53_(Beethoven,_Ludwig_van)",
+                        "description": "Public domain sheet music and scores.",
+                        "country": "Various",
+                        "format": "Sheet Music"
+            },
+            {
+                        "id": 109,
+                        "title": "Canon in D",
+                        "creator": "Johann Pachelbel",
+                        "year": 1680,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Canon_and_Gigue_in_D_major_(Pachelbel%2C_Johann)",
+                        "description": "Baroque piece now ubiquitous at weddings worldwide.",
+                        "country": "Germany",
+                        "format": "Chamber Music"
+            },
+            {
+                        "id": 105,
+                        "title": "Clair de Lune",
+                        "creator": "Claude Debussy",
+                        "year": 1905,
+                        "category": "music",
+                        "subcategory": "piano",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Suite_bergamasque_(Debussy%2C_Claude)",
+                        "description": "Impressionist piano masterpiece evoking moonlight.",
+                        "country": "France",
+                        "format": "Piano Suite"
+            },
+            {
+                        "id": 107,
+                        "title": "Eine kleine Nachtmusik",
+                        "creator": "Wolfgang Amadeus Mozart",
+                        "year": 1787,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Serenade_No.13_in_G_major%2C_K.525_(Mozart%2C_Wolfgang_Amadeus)",
+                        "description": "One of Mozart's most recognized and beloved compositions.",
+                        "country": "Austria",
+                        "format": "Serenade"
+            },
+            {
+                        "id": 103,
+                        "title": "Moonlight Sonata",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1801,
+                        "category": "music",
+                        "subcategory": "piano",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Piano_Sonata_No.14%2C_Op.27_No.2_(Beethoven%2C_Ludwig_van)",
+                        "description": "One of the most famous piano sonatas ever composed.",
+                        "country": "Germany",
+                        "format": "Piano Sonata"
+            },
+            {
+                        "id": 108,
+                        "title": "Ride of the Valkyries",
+                        "creator": "Richard Wagner",
+                        "year": 1870,
+                        "category": "music",
+                        "subcategory": "opera",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Die_Walk%C3%BCre%2C_WWV_86B_(Wagner%2C_Richard)",
+                        "description": "Dramatic orchestral piece from the Ring Cycle opera.",
+                        "country": "Germany",
+                        "format": "Opera"
+            },
+            {
+                        "id": 111,
+                        "title": "Symphony No. 5",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1808,
+                        "category": "music",
+                        "subcategory": "symphonies",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Symphony_No.5%2C_Op.67_(Beethoven%2C_Ludwig_van)",
+                        "description": "Famous for its iconic four-note opening motif.",
+                        "country": "Germany",
+                        "format": "Symphony"
+            },
+            {
+                        "id": 101,
+                        "title": "Symphony No. 9 in D minor",
+                        "creator": "Ludwig van Beethoven",
+                        "year": 1824,
+                        "category": "music",
+                        "subcategory": "symphonies",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Symphony_No.9%2C_Op.125_(Beethoven%2C_Ludwig_van)",
+                        "description": "The iconic 'Choral' symphony featuring the 'Ode to Joy' finale.",
+                        "country": "Germany",
+                        "format": "Symphony"
+            },
+            {
+                        "id": 102,
+                        "title": "The Four Seasons",
+                        "creator": "Antonio Vivaldi",
+                        "year": 1725,
+                        "category": "music",
+                        "subcategory": "concertos",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/The_Four_Seasons_(Vivaldi%2C_Antonio)",
+                        "description": "Four violin concertos depicting the seasons through music.",
+                        "country": "Italy",
+                        "format": "Concerto"
+            },
+            {
+                        "id": 104,
+                        "title": "The Nutcracker",
+                        "creator": "Pyotr Tchaikovsky",
+                        "year": 1892,
+                        "category": "music",
+                        "subcategory": "ballet",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/The_Nutcracker_(Tchaikovsky%2C_Pyotr)",
+                        "description": "Beloved ballet suite featuring the Dance of the Sugar Plum Fairy.",
+                        "country": "Russia",
+                        "format": "Ballet"
+            },
+            {
+                        "id": 110,
+                        "title": "The Planets",
+                        "creator": "Gustav Holst",
+                        "year": 1918,
+                        "category": "music",
+                        "subcategory": "symphonies",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/The_Planets%2C_Op.32_(Holst%2C_Gustav)",
+                        "description": "Orchestral suite depicting the astrological characters of planets.",
+                        "country": "UK",
+                        "format": "Orchestral Suite"
+            },
+            {
+                        "id": 112,
+                        "title": "The Well-Tempered Clavier",
+                        "creator": "Johann Sebastian Bach",
+                        "year": 1722,
+                        "category": "music",
+                        "subcategory": "piano",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/The_Well-Tempered_Clavier%2C_Book_1%2C_BWV_846-869_(Bach%2C_Johann_Sebastian)",
+                        "description": "Collection of preludes and fugues in all major and minor keys.",
+                        "country": "Germany",
+                        "format": "Keyboard"
+            },
+            {
+                        "id": 106,
+                        "title": "Toccata and Fugue in D minor",
+                        "creator": "Johann Sebastian Bach",
+                        "year": 1708,
+                        "category": "music",
+                        "subcategory": "chamber",
+                        "source": "IMSLP",
+                        "sourceUrl": "https://imslp.org/wiki/Toccata_and_Fugue_in_D_minor%2C_BWV_565_(Bach%2C_Johann_Sebastian)",
+                        "description": "Iconic organ work, often associated with horror films.",
+                        "country": "Germany",
+                        "format": "Organ"
+            },
+            {
+                        "id": 402,
+                        "title": "SQLite",
+                        "creator": "D. Richard Hipp",
+                        "year": 2000,
+                        "category": "software",
+                        "subcategory": "databases",
+                        "source": "sqlite.org",
+                        "sourceUrl": "https://sqlite.org/",
+                        "description": "Public domain embedded SQL database engine used everywhere.",
+                        "country": "USA",
+                        "format": "Database"
+            }
+];
+
+        // ============================================
+        // CATEGORIES WITH SUBCATEGORIES
+        // ============================================
+        const CATEGORIES = [
+            { id: 'all', name: 'All Works', icon: '◈', subcategories: [] },
+            { id: 'literature', name: 'Literature', icon: '📖', subcategories: [
+                { id: 'novels', name: 'Novels' },
+                { id: 'short-stories', name: 'Short Stories' },
+                { id: 'poetry', name: 'Poetry' }
+            ]},
+            { id: 'music', name: 'Music', icon: '♫', subcategories: [
+                { id: 'symphonies', name: 'Symphonies' },
+                { id: 'concertos', name: 'Concertos' },
+                { id: 'piano', name: 'Piano' },
+                { id: 'chamber', name: 'Chamber' },
+                { id: 'opera', name: 'Opera' },
+                { id: 'ballet', name: 'Ballet' }
+            ]},
+            { id: 'film', name: 'Film', icon: '🎬', subcategories: [
+                { id: 'silent', name: 'Silent Films' },
+                { id: 'comedy', name: 'Comedy' },
+                { id: 'horror', name: 'Horror' },
+                { id: 'drama', name: 'Drama' },
+                { id: 'thriller', name: 'Thriller' }
+            ]},
+            { id: 'art', name: 'Visual Art', icon: '🎨', subcategories: [
+                { id: 'paintings', name: 'Paintings' },
+                { id: 'prints', name: 'Prints' },
+                { id: 'murals', name: 'Murals & Frescos' }
+            ]},
+            { id: 'software', name: 'Software', icon: '⌨', subcategories: [
+                { id: 'databases', name: 'Databases' }
+            ]}
+        ];
+
+        // ============================================
+        // APPLICATION STATE
+        // ============================================
+        let state = {
+            works: WORKS_DATA,
+            filteredWorks: WORKS_DATA,
+            activeCategory: 'all',
+            activeSubcategory: 'all',
+            searchQuery: '',
+            yearFilter: 'all',
+            viewMode: 'grid',
+            fuse: null
+        };
+
+        // ============================================
+        // INITIALIZE FUSE.JS SEARCH
+        // ============================================
+        function initSearch() {
+            state.fuse = new Fuse(state.works, {
+                keys: ['title', 'creator', 'description', 'format', 'country'],
+                threshold: 0.3,
+                ignoreLocation: true
+            });
+        }
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function formatYear(year) {
+            if (year < 0) return `${Math.abs(year)} BCE`;
+            return year.toString();
+        }
+
+        function matchesYearFilter(work, filter) {
+            if (filter === 'all') return true;
+            if (filter === 'ancient') return work.year < 1500;
+            if (filter === '1500-1800') return work.year >= 1500 && work.year < 1800;
+            if (filter === '1800-1900') return work.year >= 1800 && work.year < 1900;
+            if (filter === '1900-1950') return work.year >= 1900 && work.year < 1950;
+            if (filter === '1950+') return work.year >= 1950;
+            return true;
+        }
+
+        function getCategoryIcon(categoryId) {
+            const cat = CATEGORIES.find(c => c.id === categoryId);
+            return cat ? cat.icon : '◈';
+        }
+
+        // ============================================
+        // FILTERING LOGIC
+        // ============================================
+        function applyFilters() {
+            let results = state.works;
+
+            // Apply search
+            if (state.searchQuery.trim()) {
+                const searchResults = state.fuse.search(state.searchQuery);
+                results = searchResults.map(r => r.item);
+            }
+
+            // Apply category filter
+            if (state.activeCategory !== 'all') {
+                results = results.filter(w => w.category === state.activeCategory);
+            }
+
+            // Apply subcategory filter
+            if (state.activeSubcategory !== 'all') {
+                results = results.filter(w => w.subcategory === state.activeSubcategory);
+            }
+
+            // Apply year filter
+            results = results.filter(w => matchesYearFilter(w, state.yearFilter));
+
+            state.filteredWorks = results;
+            renderWorks();
+            updateResultsInfo();
+        }
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
+        function renderCategoryTabs() {
+            const container = document.getElementById('categoryTabs');
+
+            const counts = CATEGORIES.map(cat => ({
+                ...cat,
+                count: cat.id === 'all'
+                    ? state.works.length
+                    : state.works.filter(w => w.category === cat.id).length
+            }));
+
+            container.innerHTML = counts.map(cat => `
+                <button class="category-tab ${state.activeCategory === cat.id ? 'active' : ''}"
+                        data-category="${cat.id}">
+                    <span>${cat.icon}</span>
+                    <span>${cat.name}</span>
+                    <span class="category-count">${cat.count}</span>
+                </button>
+            `).join('');
+
+            // Add event listeners
+            container.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    state.activeCategory = tab.dataset.category;
+                    state.activeSubcategory = 'all'; // Reset subcategory when category changes
+                    renderCategoryTabs();
+                    renderSubcategoryTabs();
+                    applyFilters();
+                });
+            });
+
+            // Render subcategory tabs
+            renderSubcategoryTabs();
+        }
+
+        function renderSubcategoryTabs() {
+            const container = document.getElementById('subcategoryTabs');
+            if (!container) return;
+
+            // Find the active category
+            const activeCategory = CATEGORIES.find(c => c.id === state.activeCategory);
+
+            // If 'all' or no subcategories, hide the container
+            if (!activeCategory || state.activeCategory === 'all' || !activeCategory.subcategories || activeCategory.subcategories.length === 0) {
+                container.innerHTML = '';
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'flex';
+
+            // Get counts for each subcategory
+            const subcatsWithCounts = activeCategory.subcategories.map(sub => ({
+                ...sub,
+                count: state.works.filter(w => w.category === state.activeCategory && w.subcategory === sub.id).length
+            }));
+
+            // Add "All" option for the category
+            const allCount = state.works.filter(w => w.category === state.activeCategory).length;
+
+            container.innerHTML = `
+                <button class="subcategory-tab ${state.activeSubcategory === 'all' ? 'active' : ''}"
+                        data-subcategory="all">
+                    <span>All ${activeCategory.name}</span>
+                    <span class="category-count">${allCount}</span>
+                </button>
+            ` + subcatsWithCounts.map(sub => `
+                <button class="subcategory-tab ${state.activeSubcategory === sub.id ? 'active' : ''}"
+                        data-subcategory="${sub.id}">
+                    <span>${sub.name}</span>
+                    <span class="category-count">${sub.count}</span>
+                </button>
+            `).join('');
+
+            // Add event listeners
+            container.querySelectorAll('.subcategory-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    state.activeSubcategory = tab.dataset.subcategory;
+                    renderSubcategoryTabs();
+                    applyFilters();
+                });
+            });
+        }
+
+        function renderWorks() {
+            const container = document.getElementById('worksGrid');
+            
+            if (state.filteredWorks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No works found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.className = `works-grid ${state.viewMode === 'list' ? 'list-view' : ''}`;
+
+            container.innerHTML = state.filteredWorks.map((work, index) => `
+                <article class="work-card" style="animation-delay: ${index * 0.03}s">
+                    <div class="card-header">
+                        <div class="card-icon">${getCategoryIcon(work.category)}</div>
+                        <div class="card-meta">
+                            <span class="card-format">${work.format}</span>
+                            <span class="card-country">• ${work.country}</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">${work.title}</h3>
+                        <p class="card-creator">${work.creator} • <span class="card-year">${formatYear(work.year)}</span></p>
+                        <p class="card-description">${work.description}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-source">via ${work.source}</span>
+                        <a href="${work.sourceUrl}" class="card-link" target="_blank" rel="noopener">Access →</a>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function updateResultsInfo() {
+            const info = document.getElementById('resultsInfo');
+            let text = `Showing <strong>${state.filteredWorks.length}</strong> works`;
+            if (state.searchQuery) {
+                text += ` matching "<em>${state.searchQuery}</em>"`;
+            }
+            info.innerHTML = text;
+        }
+
+        function renderFeatured() {
+            const randomWork = state.works[Math.floor(Math.random() * state.works.length)];
+            
+            document.getElementById('featuredIcon').textContent = getCategoryIcon(randomWork.category);
+            document.getElementById('featuredTitle').textContent = randomWork.title;
+            document.getElementById('featuredMeta').textContent = `${randomWork.creator} • ${formatYear(randomWork.year)}`;
+            document.getElementById('featuredDescription').textContent = randomWork.description;
+            document.getElementById('featuredLink').href = randomWork.sourceUrl;
+        }
+
+        // ============================================
+        // EVENT HANDLERS
+        // ============================================
+        function setupEventListeners() {
+            // Info toggle
+            document.getElementById('infoToggle').addEventListener('click', () => {
+                document.getElementById('infoPanel').classList.toggle('active');
+            });
+
+            // Search input
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    state.searchQuery = e.target.value;
+                    applyFilters();
+                }, 200);
+            });
+
+            // Year filter
+            document.getElementById('yearFilter').addEventListener('change', (e) => {
+                state.yearFilter = e.target.value;
+                applyFilters();
+            });
+
+            // View toggle
+            document.getElementById('gridViewBtn').addEventListener('click', () => {
+                state.viewMode = 'grid';
+                document.getElementById('gridViewBtn').classList.add('active');
+                document.getElementById('listViewBtn').classList.remove('active');
+                renderWorks();
+            });
+
+            document.getElementById('listViewBtn').addEventListener('click', () => {
+                state.viewMode = 'list';
+                document.getElementById('listViewBtn').classList.add('active');
+                document.getElementById('gridViewBtn').classList.remove('active');
+                renderWorks();
+            });
+        }
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        function init() {
+            initSearch();
+            renderCategoryTabs();
+            renderWorks();
+            updateResultsInfo();
+            renderFeatured();
+            setupEventListeners();
+            
+            // Set last updated date
+            document.getElementById('lastUpdated').textContent = 
+                new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Run on DOM ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
