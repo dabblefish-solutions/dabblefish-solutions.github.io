@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Open Source Archive | A Cultural History of Free Software</title>
+    <meta name="description" content="The stories, philosophies, and people behind the code that shaped computing. A cultural publication treating open source software with the reverence it deserves.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Open Source Archive">
+    <meta property="og:description" content="The stories, philosophies, and people behind the code that shaped computing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.dabblefish.com/projects/open_source_archive/">
+
+    <!-- Fonts: IBM Plex family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Fuse.js for client-side search -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+
+    <style>
+        :root {
+            /* GitHub Dark Theme */
+            --bg-primary: #0d1117;
+            --bg-surface: #161b22;
+            --bg-elevated: #1c2128;
+            --bg-card: rgba(22, 27, 34, 0.8);
+            --border: #30363d;
+            --border-muted: #21262d;
+
+            /* Text */
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+
+            /* Accents */
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-gold: #d29922;
+            --accent-purple: #a371f7;
+            --accent-red: #f85149;
+
+            /* Typography */
+            --font-heading: 'IBM Plex Serif', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        a { color: var(--accent-blue); text-decoration: none; transition: color 0.2s; }
+        a:hover { text-decoration: underline; }
+
+        /* Header */
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-green), #238636);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--bg-primary);
+            box-shadow: 0 4px 15px rgba(63, 185, 80, 0.3);
+        }
+
+        .site-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .site-title a { color: inherit; }
+        .site-title a:hover { text-decoration: none; }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-results {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 50;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-muted);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: var(--bg-elevated);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .search-result-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-divider {
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Featured Articles */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .featured-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-green);
+        }
+
+        .featured-card a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .featured-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-surface) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 3rem;
+            color: var(--accent-green);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .featured-content {
+            padding: 1.5rem;
+        }
+
+        .featured-category {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .featured-meta {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Theme/Era Pills */
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .pill:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .pill.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: var(--bg-primary);
+        }
+
+        .pill-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Era Timeline */
+        .era-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .era-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .era-pill {
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .era-pill:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-gold);
+            color: var(--text-primary);
+        }
+
+        .era-years {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .era-arrow {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* Canon Grid */
+        .canon-tier {
+            margin-bottom: 3rem;
+        }
+
+        .canon-tier:last-child {
+            margin-bottom: 0;
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tier-badge.tier-2 { background: var(--accent-blue); }
+        .tier-badge.tier-3 { background: var(--accent-purple); }
+        .tier-badge.tier-4 { background: var(--accent-gold); }
+        .tier-badge.tier-5 { background: var(--text-muted); }
+
+        .tier-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .canon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .canon-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .canon-card:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        .canon-number {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .canon-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .canon-tagline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .canon-themes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .canon-theme-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        /* Vision Quote */
+        .vision-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .vision-quote {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .vision-author {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.25rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .header-inner {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .canon-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-section">
+                <div class="logo-icon">&lt;/&gt;</div>
+                <div class="site-title">
+                    <a href="/projects/open_source_archive/">The Open Source Archive</a>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#featured">Featured</a>
+                <a href="#themes">Themes</a>
+                <a href="#canon">The Canon</a>
+                <a href="/">Dabblefish</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 class="hero-title">The Open Source Archive</h1>
+        <p class="hero-tagline">The stories, philosophies, and people behind the code that shaped computing.</p>
+        <p class="hero-description">
+            This is not a software directory. It's a cultural publication that treats open source software
+            with the same reverence that the Public Domain Review gives to classic literature and art.
+            Code is culture. Open source has heroes. Their stories deserve to be told.
+        </p>
+
+        <!-- Search -->
+        <div class="search-container">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-input" id="search-input" placeholder="Search projects, people, philosophies...">
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="section section-divider" id="featured">
+        <div class="section-header">
+            <h2 class="section-title">Featured Articles</h2>
+        </div>
+        <div class="featured-grid">
+            <article class="featured-card">
+                <a href="articles/sqlite.html">
+                    <div class="featured-image">&#x1F4BE;</div>
+                    <div class="featured-content">
+                        <div class="featured-category">Philosophy</div>
+                        <h3 class="featured-title">Why SQLite is Public Domain: D. Richard Hipp's Radical Generosity</h3>
+                        <p class="featured-excerpt">
+                            In the spring of 2000, a programmer working on a battleship got frustrated with Informix.
+                            Twenty-five years later, SQLite runs on every smartphone on Earth.
+                        </p>
+                        <div class="featured-meta">12 min read</div>
+                    </div>
+                </a>
+            </article>
+            <article class="featured-card">
+                <a href="articles/doom.html">
+                    <div class="featured-image">&#x1F47E;</div>
+                    <div class="featured-content">
+                        <div class="featured-category">Origin Story</div>
+                        <h3 class="featured-title">Rage Against the Machine: John Carmack, DOOM, and the Birth of Open Game Engines</h3>
+                        <p class="featured-excerpt">
+                            How id Software's 1997 source release spawned an industry of open game development
+                            and changed what "giving back" means in gaming.
+                        </p>
+                        <div class="featured-meta">15 min read</div>
+                    </div>
+                </a>
+            </article>
+            <article class="featured-card">
+                <a href="articles/linux.html">
+                    <div class="featured-image">&#x1F427;</div>
+                    <div class="featured-content">
+                        <div class="featured-category">Origin Story</div>
+                        <h3 class="featured-title">The Impossible Hobby Project: How Linux Changed Everything</h3>
+                        <p class="featured-excerpt">
+                            "I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu)."
+                            History's most understated announcement.
+                        </p>
+                        <div class="featured-meta">18 min read</div>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Browse by Theme -->
+    <section class="section section-divider" id="themes">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Theme</h2>
+        </div>
+        <div class="pill-container">
+            <button class="pill" data-theme="liberation">
+                <span class="pill-icon">&#x1F5FD;</span>
+                <span>Liberation</span>
+            </button>
+            <button class="pill" data-theme="craft">
+                <span class="pill-icon">&#x2728;</span>
+                <span>Craft</span>
+            </button>
+            <button class="pill" data-theme="rebellion">
+                <span class="pill-icon">&#x270A;</span>
+                <span>Rebellion</span>
+            </button>
+            <button class="pill" data-theme="collaboration">
+                <span class="pill-icon">&#x1F91D;</span>
+                <span>Collaboration</span>
+            </button>
+            <button class="pill" data-theme="preservation">
+                <span class="pill-icon">&#x1F3DB;</span>
+                <span>Preservation</span>
+            </button>
+            <button class="pill" data-theme="play">
+                <span class="pill-icon">&#x1F3AE;</span>
+                <span>Play</span>
+            </button>
+            <button class="pill" data-theme="infrastructure">
+                <span class="pill-icon">&#x1F3D7;</span>
+                <span>Infrastructure</span>
+            </button>
+            <button class="pill" data-theme="philosophy">
+                <span class="pill-icon">&#x1F4DC;</span>
+                <span>Philosophy</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Browse by Era -->
+    <section class="section section-divider">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Era</h2>
+        </div>
+        <div class="era-timeline">
+            <div class="era-item">
+                <button class="era-pill">The Founders</button>
+                <span class="era-years">1969-1983</span>
+                <span class="era-arrow">&#x2192;</span>
+            </div>
+            <div class="era-item">
+                <button class="era-pill">GNU Generation</button>
+                <span class="era-years">1983-1991</span>
+                <span class="era-arrow">&#x2192;</span>
+            </div>
+            <div class="era-item">
+                <button class="era-pill">Linux Explosion</button>
+                <span class="era-years">1991-1998</span>
+                <span class="era-arrow">&#x2192;</span>
+            </div>
+            <div class="era-item">
+                <button class="era-pill">Cathedral Falls</button>
+                <span class="era-years">1998-2004</span>
+                <span class="era-arrow">&#x2192;</span>
+            </div>
+            <div class="era-item">
+                <button class="era-pill">Web 2.0 & Beyond</button>
+                <span class="era-years">2004-2015</span>
+                <span class="era-arrow">&#x2192;</span>
+            </div>
+            <div class="era-item">
+                <button class="era-pill">Cloud Age</button>
+                <span class="era-years">2015-Present</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Canon -->
+    <section class="section section-divider" id="canon">
+        <div class="section-header">
+            <h2 class="section-title">The Canon</h2>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 700px;">
+            The essential projects every reader should know. These are the "greatest hits" of open source&mdash;the
+            software that shaped computing, freed users, and changed what's possible.
+        </p>
+
+        <!-- Tier 1: Foundational -->
+        <div class="canon-tier">
+            <div class="tier-header">
+                <span class="tier-badge">Tier 1</span>
+                <span class="tier-title">Foundational (Must-Know)</span>
+            </div>
+            <div class="canon-grid">
+                <div class="canon-card" data-project="unix">
+                    <div class="canon-number">#1</div>
+                    <div class="canon-name">Unix</div>
+                    <div class="canon-tagline">The origin of everything</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                        <span class="canon-theme-tag">founders</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="c">
+                    <div class="canon-number">#2</div>
+                    <div class="canon-name">C</div>
+                    <div class="canon-tagline">The language that built the world</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">founders</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="gnu">
+                    <div class="canon-number">#3</div>
+                    <div class="canon-name">GNU Project</div>
+                    <div class="canon-tagline">Stallman's crusade</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">philosophy</span>
+                        <span class="canon-theme-tag">rebellion</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="linux">
+                    <div class="canon-number">#4</div>
+                    <div class="canon-name">Linux Kernel</div>
+                    <div class="canon-tagline">The impossible hobby project</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">collaboration</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="gcc">
+                    <div class="canon-number">#5</div>
+                    <div class="canon-name">GCC</div>
+                    <div class="canon-tagline">The compiler that made GNU possible</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="apache">
+                    <div class="canon-number">#6</div>
+                    <div class="canon-name">Apache HTTP Server</div>
+                    <div class="canon-tagline">The server that won the web</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                        <span class="canon-theme-tag">collaboration</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="postgresql">
+                    <div class="canon-number">#7</div>
+                    <div class="canon-name">PostgreSQL</div>
+                    <div class="canon-tagline">The most advanced open database</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="git">
+                    <div class="canon-number">#8</div>
+                    <div class="canon-name">Git</div>
+                    <div class="canon-tagline">Torvalds' "other" project</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">rebellion</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="python">
+                    <div class="canon-number">#9</div>
+                    <div class="canon-name">Python</div>
+                    <div class="canon-tagline">Readability as philosophy</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="firefox">
+                    <div class="canon-number">#10</div>
+                    <div class="canon-name">Firefox</div>
+                    <div class="canon-tagline">The browser that broke Microsoft</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">rebellion</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 2: Transformative -->
+        <div class="canon-tier">
+            <div class="tier-header">
+                <span class="tier-badge tier-2">Tier 2</span>
+                <span class="tier-title">Transformative</span>
+            </div>
+            <div class="canon-grid">
+                <div class="canon-card" data-project="doom">
+                    <div class="canon-number">#11</div>
+                    <div class="canon-name">DOOM</div>
+                    <div class="canon-tagline">The engine that spawned an industry</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">play</span>
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="blender">
+                    <div class="canon-number">#12</div>
+                    <div class="canon-name">Blender</div>
+                    <div class="canon-tagline">3D for the people</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="sqlite">
+                    <div class="canon-number">#13</div>
+                    <div class="canon-name">SQLite</div>
+                    <div class="canon-tagline">Public domain perfection</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="curl">
+                    <div class="canon-number">#14</div>
+                    <div class="canon-name">curl</div>
+                    <div class="canon-tagline">The internet's duct tape</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="openssl">
+                    <div class="canon-number">#15</div>
+                    <div class="canon-name">OpenSSL</div>
+                    <div class="canon-tagline">The encryption under everything</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="vlc">
+                    <div class="canon-number">#16</div>
+                    <div class="canon-name">VLC</div>
+                    <div class="canon-tagline">Plays anything, anywhere</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">play</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="wordpress">
+                    <div class="canon-number">#17</div>
+                    <div class="canon-name">WordPress</div>
+                    <div class="canon-tagline">The web's CMS</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">collaboration</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="kubernetes">
+                    <div class="canon-number">#18</div>
+                    <div class="canon-name">Kubernetes</div>
+                    <div class="canon-tagline">Google's gift to infrastructure</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                        <span class="canon-theme-tag">cloud</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="tensorflow">
+                    <div class="canon-number">#19</div>
+                    <div class="canon-name">TensorFlow</div>
+                    <div class="canon-tagline">AI democratized</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="vim">
+                    <div class="canon-number">#20</div>
+                    <div class="canon-name">Vim/Neovim</div>
+                    <div class="canon-tagline">The editor wars continue</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 3: Cultural Touchstones -->
+        <div class="canon-tier">
+            <div class="tier-header">
+                <span class="tier-badge tier-3">Tier 3</span>
+                <span class="tier-title">Cultural Touchstones</span>
+            </div>
+            <div class="canon-grid">
+                <div class="canon-card" data-project="quake">
+                    <div class="canon-number">#21</div>
+                    <div class="canon-name">Quake</div>
+                    <div class="canon-tagline">True 3D and modding culture</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">play</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="gimp">
+                    <div class="canon-number">#22</div>
+                    <div class="canon-name">GIMP</div>
+                    <div class="canon-tagline">Photoshop's nemesis</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="audacity">
+                    <div class="canon-number">#23</div>
+                    <div class="canon-name">Audacity</div>
+                    <div class="canon-tagline">Audio for everyone</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="libreoffice">
+                    <div class="canon-number">#24</div>
+                    <div class="canon-name">LibreOffice</div>
+                    <div class="canon-tagline">The OpenOffice succession</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">rebellion</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="inkscape">
+                    <div class="canon-number">#25</div>
+                    <div class="canon-name">Inkscape</div>
+                    <div class="canon-tagline">Vector graphics liberation</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="dosbox">
+                    <div class="canon-number">#26</div>
+                    <div class="canon-name">DOSBox</div>
+                    <div class="canon-tagline">Preserving PC gaming history</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">preservation</span>
+                        <span class="canon-theme-tag">play</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="mame">
+                    <div class="canon-number">#27</div>
+                    <div class="canon-name">MAME</div>
+                    <div class="canon-tagline">The arcade archive</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">preservation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="nethack">
+                    <div class="canon-number">#28</div>
+                    <div class="canon-name">NetHack</div>
+                    <div class="canon-tagline">The roguelike that won't die</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">play</span>
+                        <span class="canon-theme-tag">collaboration</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="tex">
+                    <div class="canon-number">#29</div>
+                    <div class="canon-name">TeX/LaTeX</div>
+                    <div class="canon-tagline">Knuth's typesetting masterpiece</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="emacs">
+                    <div class="canon-number">#30</div>
+                    <div class="canon-name">Emacs</div>
+                    <div class="canon-tagline">The OS disguised as an editor</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">philosophy</span>
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 4: Modern Essentials -->
+        <div class="canon-tier">
+            <div class="tier-header">
+                <span class="tier-badge tier-4">Tier 4</span>
+                <span class="tier-title">Modern Essentials</span>
+            </div>
+            <div class="canon-grid">
+                <div class="canon-card" data-project="nodejs">
+                    <div class="canon-number">#31</div>
+                    <div class="canon-name">Node.js</div>
+                    <div class="canon-tagline">JavaScript escapes the browser</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="react">
+                    <div class="canon-number">#32</div>
+                    <div class="canon-name">React</div>
+                    <div class="canon-tagline">UI as functions</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="vscode">
+                    <div class="canon-number">#33</div>
+                    <div class="canon-name">VS Code</div>
+                    <div class="canon-tagline">Microsoft's open source pivot</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="docker">
+                    <div class="canon-number">#34</div>
+                    <div class="canon-name">Docker</div>
+                    <div class="canon-tagline">Containers for everyone</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="rust">
+                    <div class="canon-number">#35</div>
+                    <div class="canon-name">Rust</div>
+                    <div class="canon-tagline">Memory safety without GC</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="go">
+                    <div class="canon-number">#36</div>
+                    <div class="canon-name">Go</div>
+                    <div class="canon-tagline">Google's systems language</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="redis">
+                    <div class="canon-number">#37</div>
+                    <div class="canon-name">Redis</div>
+                    <div class="canon-tagline">The in-memory speed demon</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="elasticsearch">
+                    <div class="canon-number">#38</div>
+                    <div class="canon-name">Elasticsearch</div>
+                    <div class="canon-tagline">Search at scale</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="ansible">
+                    <div class="canon-number">#39</div>
+                    <div class="canon-name">Ansible</div>
+                    <div class="canon-tagline">Infrastructure as code</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="terraform">
+                    <div class="canon-number">#40</div>
+                    <div class="canon-name">Terraform</div>
+                    <div class="canon-tagline">Cloud provisioning</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">infrastructure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 5: Underdogs & Cult Classics -->
+        <div class="canon-tier">
+            <div class="tier-header">
+                <span class="tier-badge tier-5">Tier 5</span>
+                <span class="tier-title">Underdogs & Cult Classics</span>
+            </div>
+            <div class="canon-grid">
+                <div class="canon-card" data-project="plan9">
+                    <div class="canon-number">#41</div>
+                    <div class="canon-name">Plan 9</div>
+                    <div class="canon-tagline">Unix's radical successor</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">philosophy</span>
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="haiku">
+                    <div class="canon-number">#42</div>
+                    <div class="canon-name">Haiku</div>
+                    <div class="canon-tagline">BeOS reborn</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">preservation</span>
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="godot">
+                    <div class="canon-number">#43</div>
+                    <div class="canon-name">Godot</div>
+                    <div class="canon-tagline">The indie game engine revolution</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">play</span>
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="freebsd">
+                    <div class="canon-number">#44</div>
+                    <div class="canon-name">FreeBSD</div>
+                    <div class="canon-tagline">The other Unix</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="openbsd">
+                    <div class="canon-number">#45</div>
+                    <div class="canon-name">OpenBSD</div>
+                    <div class="canon-tagline">Security obsession</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="mastodon">
+                    <div class="canon-number">#46</div>
+                    <div class="canon-name">Mastodon</div>
+                    <div class="canon-tagline">Decentralized social media</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">rebellion</span>
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="signal">
+                    <div class="canon-number">#47</div>
+                    <div class="canon-name">Signal</div>
+                    <div class="canon-tagline">Encrypted messaging for all</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                        <span class="canon-theme-tag">philosophy</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="obs">
+                    <div class="canon-number">#48</div>
+                    <div class="canon-name">OBS Studio</div>
+                    <div class="canon-tagline">Streaming democratized</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="krita">
+                    <div class="canon-number">#49</div>
+                    <div class="canon-name">Krita</div>
+                    <div class="canon-tagline">Digital painting for artists</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">craft</span>
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+                <div class="canon-card" data-project="zotero">
+                    <div class="canon-number">#50</div>
+                    <div class="canon-name">Zotero</div>
+                    <div class="canon-tagline">Research management</div>
+                    <div class="canon-themes">
+                        <span class="canon-theme-tag">liberation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Quote -->
+    <section class="section">
+        <div class="vision-section">
+            <blockquote class="vision-quote">
+                "We shape our tools, and thereafter our tools shape us."
+            </blockquote>
+            <cite class="vision-author">&mdash; John Culkin (often attributed to McLuhan)</cite>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            The Open Source Archive is a project of <a href="/">Dabblefish</a>.<br>
+            Code is culture. Open source has heroes. Their stories deserve to be told.
+        </p>
+    </footer>
+
+    <script>
+        // Project data for search
+        const projects = [
+            { name: "Unix", tagline: "The origin of everything", tier: 1, themes: ["infrastructure", "founders"] },
+            { name: "C", tagline: "The language that built the world", tier: 1, themes: ["craft", "founders"] },
+            { name: "GNU Project", tagline: "Stallman's crusade", tier: 1, themes: ["philosophy", "rebellion"] },
+            { name: "Linux Kernel", tagline: "The impossible hobby project", tier: 1, themes: ["liberation", "collaboration"] },
+            { name: "GCC", tagline: "The compiler that made GNU possible", tier: 1, themes: ["infrastructure", "philosophy"] },
+            { name: "Apache HTTP Server", tagline: "The server that won the web", tier: 1, themes: ["infrastructure", "collaboration"] },
+            { name: "PostgreSQL", tagline: "The most advanced open database", tier: 1, themes: ["craft", "infrastructure"] },
+            { name: "Git", tagline: "Torvalds' other project", tier: 1, themes: ["craft", "rebellion"] },
+            { name: "Python", tagline: "Readability as philosophy", tier: 1, themes: ["craft", "philosophy"] },
+            { name: "Firefox", tagline: "The browser that broke Microsoft", tier: 1, themes: ["liberation", "rebellion"] },
+            { name: "DOOM", tagline: "The engine that spawned an industry", tier: 2, themes: ["play", "liberation"] },
+            { name: "Blender", tagline: "3D for the people", tier: 2, themes: ["liberation", "craft"] },
+            { name: "SQLite", tagline: "Public domain perfection", tier: 2, themes: ["craft", "philosophy"] },
+            { name: "curl", tagline: "The internet's duct tape", tier: 2, themes: ["infrastructure", "craft"] },
+            { name: "OpenSSL", tagline: "The encryption under everything", tier: 2, themes: ["infrastructure"] },
+            { name: "VLC", tagline: "Plays anything, anywhere", tier: 2, themes: ["liberation", "play"] },
+            { name: "WordPress", tagline: "The web's CMS", tier: 2, themes: ["liberation", "collaboration"] },
+            { name: "Kubernetes", tagline: "Google's gift to infrastructure", tier: 2, themes: ["infrastructure", "cloud"] },
+            { name: "TensorFlow", tagline: "AI democratized", tier: 2, themes: ["liberation", "infrastructure"] },
+            { name: "Vim/Neovim", tagline: "The editor wars continue", tier: 2, themes: ["craft", "philosophy"] },
+            { name: "Quake", tagline: "True 3D and modding culture", tier: 3, themes: ["play"] },
+            { name: "GIMP", tagline: "Photoshop's nemesis", tier: 3, themes: ["liberation"] },
+            { name: "Audacity", tagline: "Audio for everyone", tier: 3, themes: ["liberation"] },
+            { name: "LibreOffice", tagline: "The OpenOffice succession", tier: 3, themes: ["liberation", "rebellion"] },
+            { name: "Inkscape", tagline: "Vector graphics liberation", tier: 3, themes: ["liberation"] },
+            { name: "DOSBox", tagline: "Preserving PC gaming history", tier: 3, themes: ["preservation", "play"] },
+            { name: "MAME", tagline: "The arcade archive", tier: 3, themes: ["preservation"] },
+            { name: "NetHack", tagline: "The roguelike that won't die", tier: 3, themes: ["play", "collaboration"] },
+            { name: "TeX/LaTeX", tagline: "Knuth's typesetting masterpiece", tier: 3, themes: ["craft", "philosophy"] },
+            { name: "Emacs", tagline: "The OS disguised as an editor", tier: 3, themes: ["philosophy", "craft"] },
+            { name: "Node.js", tagline: "JavaScript escapes the browser", tier: 4, themes: ["liberation"] },
+            { name: "React", tagline: "UI as functions", tier: 4, themes: ["craft"] },
+            { name: "VS Code", tagline: "Microsoft's open source pivot", tier: 4, themes: ["liberation"] },
+            { name: "Docker", tagline: "Containers for everyone", tier: 4, themes: ["infrastructure"] },
+            { name: "Rust", tagline: "Memory safety without GC", tier: 4, themes: ["craft", "philosophy"] },
+            { name: "Go", tagline: "Google's systems language", tier: 4, themes: ["craft"] },
+            { name: "Redis", tagline: "The in-memory speed demon", tier: 4, themes: ["infrastructure"] },
+            { name: "Elasticsearch", tagline: "Search at scale", tier: 4, themes: ["infrastructure"] },
+            { name: "Ansible", tagline: "Infrastructure as code", tier: 4, themes: ["infrastructure"] },
+            { name: "Terraform", tagline: "Cloud provisioning", tier: 4, themes: ["infrastructure"] },
+            { name: "Plan 9", tagline: "Unix's radical successor", tier: 5, themes: ["philosophy", "craft"] },
+            { name: "Haiku", tagline: "BeOS reborn", tier: 5, themes: ["preservation", "craft"] },
+            { name: "Godot", tagline: "The indie game engine revolution", tier: 5, themes: ["play", "liberation"] },
+            { name: "FreeBSD", tagline: "The other Unix", tier: 5, themes: ["craft"] },
+            { name: "OpenBSD", tagline: "Security obsession", tier: 5, themes: ["craft", "philosophy"] },
+            { name: "Mastodon", tagline: "Decentralized social media", tier: 5, themes: ["rebellion", "liberation"] },
+            { name: "Signal", tagline: "Encrypted messaging for all", tier: 5, themes: ["liberation", "philosophy"] },
+            { name: "OBS Studio", tagline: "Streaming democratized", tier: 5, themes: ["liberation"] },
+            { name: "Krita", tagline: "Digital painting for artists", tier: 5, themes: ["craft", "liberation"] },
+            { name: "Zotero", tagline: "Research management", tier: 5, themes: ["liberation"] }
+        ];
+
+        // Initialize Fuse.js for fuzzy search
+        const fuse = new Fuse(projects, {
+            keys: ['name', 'tagline', 'themes'],
+            threshold: 0.3,
+            includeScore: true
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim();
+
+            if (query.length < 2) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const results = fuse.search(query).slice(0, 8);
+
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item"><div class="search-result-title">No results found</div></div>';
+            } else {
+                searchResults.innerHTML = results.map(r => `
+                    <div class="search-result-item" data-project="${r.item.name.toLowerCase().replace(/[^a-z0-9]/g, '')}">
+                        <div class="search-result-title">${r.item.name}</div>
+                        <div class="search-result-meta">${r.item.tagline} &bull; Tier ${r.item.tier}</div>
+                    </div>
+                `).join('');
+            }
+
+            searchResults.classList.add('active');
+        });
+
+        // Close search on click outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Scroll to project on search result click
+        searchResults.addEventListener('click', (e) => {
+            const item = e.target.closest('.search-result-item');
+            if (item && item.dataset.project) {
+                const card = document.querySelector(`[data-project="${item.dataset.project}"]`);
+                if (card) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    card.style.outline = '2px solid var(--accent-green)';
+                    setTimeout(() => card.style.outline = '', 2000);
+                }
+                searchResults.classList.remove('active');
+                searchInput.value = '';
+            }
+        });
+
+        // Theme filter functionality (placeholder)
+        document.querySelectorAll('.pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                pill.classList.toggle('active');
+                // TODO: Implement theme filtering
+            });
+        });
+    </script>
+</body>
+</html>

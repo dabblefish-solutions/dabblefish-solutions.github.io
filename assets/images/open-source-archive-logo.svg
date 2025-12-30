@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#0d1117"/>
+  <circle cx="64" cy="64" r="58" fill="none" stroke="#3fb950" stroke-width="2"/>
+
+  <!-- Code brackets -->
+  <path d="M40 44 L28 64 L40 84" stroke="#3fb950" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M88 44 L100 64 L88 84" stroke="#3fb950" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Slash in center -->
+  <path d="M72 40 L56 88" stroke="#58a6ff" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Decorative dots -->
+  <circle cx="64" cy="24" r="3" fill="#8b949e"/>
+  <circle cx="64" cy="104" r="3" fill="#8b949e"/>
+</svg>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Linux Origin Story | The Open Source Archive</title>
+    <meta name="description" content="'I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu).' History's most understated announcement.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Impossible Hobby Project: How Linux Changed Everything">
+    <meta property="og:description" content="The story of how a Finnish student's weekend project became the foundation of modern computing.">
+    <meta property="og:type" content="article">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-surface: #161b22;
+            --bg-elevated: #1c2128;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-gold: #d29922;
+            --accent-purple: #a371f7;
+            --font-heading: 'IBM Plex Serif', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        a { color: var(--accent-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+
+        .article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-subtitle {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #0a1628 0%, var(--bg-surface) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+        }
+
+        .hero-image-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            line-height: 1.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .article-content code {
+            font-family: var(--font-mono);
+            background: var(--bg-surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .placeholder-notice {
+            background: var(--bg-surface);
+            border: 1px dashed var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .placeholder-notice h3 {
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-body);
+        }
+
+        .placeholder-notice p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .related-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-title {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .related-item {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .related-item:hover {
+            background: var(--bg-primary);
+            text-decoration: none;
+        }
+
+        .related-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .related-item-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article { padding: 2rem 1rem; }
+            .article-title { font-size: 2rem; }
+            .article-meta { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="../" class="back-link">
+                <span>&larr;</span>
+                <span>The Open Source Archive</span>
+            </a>
+        </div>
+    </header>
+
+    <article class="article">
+        <header class="article-header">
+            <div class="article-category">Origin Story</div>
+            <h1 class="article-title">The Impossible Hobby Project</h1>
+            <p class="article-subtitle">How Linux Changed Everything</p>
+            <div class="article-meta">
+                <span>18 min read</span>
+                <span>Liberation &bull; Collaboration</span>
+            </div>
+        </header>
+
+        <div class="hero-image">
+            <div class="hero-image-icon">&#x1F427;</div>
+            <p>Hero image placeholder</p>
+        </div>
+
+        <div class="article-content">
+            <p>
+                On August 25, 1991, a 21-year-old Finnish computer science student posted a message to
+                the comp.os.minix newsgroup. It would become one of the most famous announcements in
+                computing history:
+            </p>
+
+            <pre>From: torvalds@klaava.Helsinki.FI (Linus Benedict Torvalds)
+Newsgroups: comp.os.minix
+Subject: What would you like to see most in minix?
+
+Hello everybody out there using minix -
+
+I'm doing a (free) operating system (just a hobby, won't be big
+and professional like gnu) for 386(486) AT clones.</pre>
+
+            <p>
+                "Won't be big and professional." History's most understated announcement. Three decades
+                later, Linux runs on everything from smartphones to supercomputers, from cars to the
+                International Space Station. It's the foundation of Android, the backbone of cloud
+                computing, and the kernel inside nearly every piece of networking equipment on Earth.
+            </p>
+
+            <blockquote>
+                "Software is like sex: it's better when it's free."
+                <br>&mdash; Linus Torvalds
+            </blockquote>
+
+            <div class="placeholder-notice">
+                <h3>Article In Progress</h3>
+                <p>This article is being written. Check back soon for the full story of Linux's creation.</p>
+            </div>
+
+            <h2>Coming Soon</h2>
+            <p>This article will explore:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                <li>Helsinki, 1991: A student and his 386</li>
+                <li>The Tanenbaum-Torvalds debate: monolithic vs microkernel</li>
+                <li>How the GPL shaped Linux's growth</li>
+                <li>From version 0.01 to world domination</li>
+                <li>The distributed development revolution</li>
+                <li>Git: when version control becomes a problem</li>
+            </ul>
+        </div>
+
+        <aside class="related-section">
+            <h3 class="related-title">Related Projects</h3>
+            <a href="#" class="related-item">
+                <div class="related-item-name">GNU Project</div>
+                <div class="related-item-tagline">Stallman's crusade</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">Git</div>
+                <div class="related-item-tagline">Torvalds' "other" project</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">Unix</div>
+                <div class="related-item-tagline">The origin of everything</div>
+            </a>
+        </aside>
+    </article>
+
+    <footer class="footer">
+        <p>
+            <a href="../">The Open Source Archive</a> &bull; A project of <a href="/">Dabblefish</a>
+        </p>
+    </footer>
+</body>
+</html>

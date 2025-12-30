@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why SQLite is Public Domain | The Open Source Archive</title>
+    <meta name="description" content="In the spring of 2000, D. Richard Hipp was working on a battleship when he got frustrated with Informix. Twenty-five years later, SQLite runs on every smartphone on Earth.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Why SQLite is Public Domain: D. Richard Hipp's Radical Generosity">
+    <meta property="og:description" content="The story of how one programmer's frustration with enterprise databases led to the most deployed software in history.">
+    <meta property="og:type" content="article">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-surface: #161b22;
+            --bg-elevated: #1c2128;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-gold: #d29922;
+            --font-heading: 'IBM Plex Serif', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        a { color: var(--accent-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Header */
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+
+        /* Article */
+        .article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-subtitle {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Hero Image Placeholder */
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+        }
+
+        .hero-image-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Content */
+        .article-content {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            line-height: 1.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-content h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid var(--accent-green);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .article-content code {
+            font-family: var(--font-mono);
+            background: var(--bg-surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* Placeholder Notice */
+        .placeholder-notice {
+            background: var(--bg-surface);
+            border: 1px dashed var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .placeholder-notice h3 {
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-body);
+        }
+
+        .placeholder-notice p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .related-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-title {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .related-item {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .related-item:hover {
+            background: var(--bg-primary);
+            text-decoration: none;
+        }
+
+        .related-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .related-item-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article { padding: 2rem 1rem; }
+            .article-title { font-size: 2rem; }
+            .article-meta { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="../" class="back-link">
+                <span>&larr;</span>
+                <span>The Open Source Archive</span>
+            </a>
+        </div>
+    </header>
+
+    <article class="article">
+        <header class="article-header">
+            <div class="article-category">Philosophy</div>
+            <h1 class="article-title">Why SQLite is Public Domain</h1>
+            <p class="article-subtitle">D. Richard Hipp's Radical Generosity</p>
+            <div class="article-meta">
+                <span>12 min read</span>
+                <span>Philosophy &bull; Craft</span>
+            </div>
+        </header>
+
+        <div class="hero-image">
+            <div class="hero-image-icon">&#x1F4BE;</div>
+            <p>Hero image placeholder</p>
+        </div>
+
+        <div class="article-content">
+            <p>
+                In the spring of 2000, D. Richard Hipp was debugging software aboard the USS Oscar Austin,
+                a guided-missile destroyer being built by Bath Iron Works for the U.S. Navy. His program
+                depended on Informix, an enterprise database that required a database administrator to be
+                running before it would function. When the server went down, so did his software. When the
+                DBA wasn't around, nothing worked.
+            </p>
+
+            <p>
+                "I'll just write my own," he thought. A sentence that has preceded both disaster and
+                brilliance in roughly equal measure throughout the history of software.
+            </p>
+
+            <p>
+                Hipp's frustration was specific: he needed a database that required zero configuration,
+                zero administration, and zero server processes. Something that could run anywhere,
+                including embedded systems with no administrator in sight. So over the next few months,
+                he wrote SQLite. The name is literal: SQL Lite. A lightweight implementation of SQL that
+                runs as a library linked directly into your program, storing everything in a single file
+                on disk.
+            </p>
+
+            <p>
+                Twenty-five years later, SQLite runs on every smartphone on Earth. Every iPhone, every
+                Android device. It runs in every web browser. It runs in every copy of Windows 10 and 11,
+                every Mac, most Linux distributions. It runs in Airbus aircraft and in medical devices.
+                There are likely more instances of SQLite running right now than any other software
+                component ever written. Conservative estimates put the number at over one trillion active
+                deployments.
+            </p>
+
+            <p>
+                And Hipp gave it all away. Not under the GPL, not under the MIT license, not under Apache
+                or BSD. He placed SQLite in the public domain.
+            </p>
+
+            <h2>The Blessing</h2>
+
+            <p>
+                Most open source projects have licenses. The GPL requires sharing modifications. MIT and
+                BSD require attribution. Apache has patent clauses. These are legal documents, written by
+                lawyers, with terms and conditions.
+            </p>
+
+            <p>
+                SQLite has a blessing.
+            </p>
+
+            <blockquote>
+                May you do good and not evil.<br>
+                May you find forgiveness for yourself and forgive others.<br>
+                May you share freely, never taking more than you give.
+            </blockquote>
+
+            <p>
+                That's it. No copyright holder. No license compliance. No lawyers required. You can do
+                anything you want with SQLite. You can modify it without sharing your changes. You can
+                sell products containing it without attribution. You can fork it and close the fork. You
+                can pretend you wrote it yourself, though Hipp notes dryly that this "is generally not
+                recommended for career advancement."
+            </p>
+
+            <p>
+                Why public domain rather than a permissive open source license? Hipp's reasoning is
+                pragmatic. International corporations have legal teams that must review
+                any software license. The GPL is pages long. MIT is a paragraph. Even those require
+                lawyers to evaluate. Public domain requires nothing. There is no license to comply with
+                because there are no restrictions.
+            </p>
+
+            <p>
+                This creates an interesting legal wrinkle: some jurisdictions don't recognize the concept
+                of voluntarily placing work in the public domain. If you can't give away copyright in your
+                country, how can you use SQLite? The SQLite Consortium solved this by creating an
+                alternative: for organizations that need a formal legal document, they offer a "SQLite
+                License" for purchase. This license explicitly grants all the permissions that public
+                domain status would provide, written in the kind of legalese that makes corporate lawyers
+                comfortable.
+            </p>
+
+            <h2>92 Million Lines of Tests</h2>
+
+            <p>
+                The SQLite source code contains approximately 150,000 lines of C. The test suite contains
+                over 92 million lines of code. That's a ratio of roughly 600 lines of tests for every line
+                of production code.
+            </p>
+
+            <p>
+                This is not a typo.
+            </p>
+
+            <p>
+                SQLite achieves 100% branch test coverage. Not 80%. Not 95%. Every single branch in the
+                code is exercised by at least one test. This includes error handling paths that can only
+                be triggered by malloc failures or I/O errors. The test harness can inject failures at any
+                of hundreds of points to verify correct behavior under conditions that would never occur
+                in normal operation.
+            </p>
+
+            <p>
+                There are three separate test harnesses, each developed independently, cross-checking
+                each other. There's a fuzz testing framework that generates millions of random inputs.
+                There's SQL Logic Test, which runs millions of SQL statements and compares results across
+                multiple database engines. There are proprietary test suites from aviation and medical
+                device customers who require different safety certifications.
+            </p>
+
+            <p>
+                Hipp's philosophy here is straightforward: SQLite runs on aircraft. SQLite stores your
+                messages and photos. SQLite manages financial records. The cost of a bug is not measured
+                in customer complaints but in potential catastrophe. When your code might run on a
+                billion devices, even a one-in-a-million bug means thousands of failures.
+            </p>
+
+            <h2>The Consortium Model</h2>
+
+            <p>
+                Here is the paradox of public domain software: if there are no restrictions on use, how
+                does the creator make money? If anyone can take your work without paying, who will pay?
+            </p>
+
+            <p>
+                Hipp's answer is the SQLite Consortium. Companies pay $120,000 per year for membership.
+                In return, they receive nothing that isn't also available for free. The same source code.
+                The same documentation. The same mailing lists.
+            </p>
+
+            <p>
+                What they do receive is influence and insurance. Consortium members can suggest features
+                and have them prioritized. They get direct access to the development team for support.
+                Most importantly, their money ensures that SQLite continues to exist and be maintained.
+                It's not a payment for software; it's a payment for continuity.
+            </p>
+
+            <p>
+                Current and former consortium members include Mozilla, Adobe, Bloomberg, Bentley Systems,
+                and other companies whose products depend utterly on SQLite's reliability. For them,
+                $120,000 per year is trivial compared to the cost of SQLite becoming unmaintained or the
+                cost of building their own embedded database.
+            </p>
+
+            <p>
+                This is patronage economics. The wealthy institutions that benefit most from the commons
+                pay to maintain it, not because they're legally obligated but because the alternative is
+                worse. It works because SQLite is essential enough that someone must ensure its survival,
+                and cheap enough that no single company minds bearing that cost.
+            </p>
+
+            <h2>Radical Simplicity</h2>
+
+            <p>
+                SQLite's design philosophy can be summarized in a single constraint: the entire database
+                is stored in a single file. One file. No write-ahead logs in a separate location. No
+                separate index files. No configuration directories. Just a .db file that you can copy,
+                email, back up by copying to Dropbox.
+            </p>
+
+            <p>
+                This constraint drives everything else. Because the file must be self-contained, the
+                format must be stable. SQLite guarantees that databases created today will be readable
+                forever. Not "for the next major version" or "until we deprecate it." Forever. The file
+                format is documented in the Library of Congress's recommended formats for long-term
+                archival.
+            </p>
+
+            <p>
+                Because there's no server, there's no configuration. You link the library. You call
+                sqlite3_open() with a filename. You're running a database. The barrier to entry is as
+                low as any data storage mechanism can possibly be.
+            </p>
+
+            <p>
+                This simplicity is SQLite's competitive advantage against not just other databases but
+                against alternatives like flat files or JSON. You want to store structured data? You
+                could write a parser for CSV. You could manage JSON files. Or you could use SQLite and
+                get ACID transactions, SQL queries, and proven reliability for roughly the same amount
+                of code.
+            </p>
+
+            <h2>The Rule of St. Benedict</h2>
+
+            <p>
+                In 2018, SQLite adopted a Code of Conduct based on the Rule of St. Benedict, a sixth-century
+                monastic rule. This was not a joke, though many assumed it was.
+            </p>
+
+            <p>
+                The Rule includes instructions like "First of all, love the Lord God with your whole
+                heart, your whole soul, and your whole strength" and "Do not be jealous" and "Do not
+                give way to anger." It was, predictably, controversial. Critics called it exclusionary,
+                religious imposition, or simply weird.
+            </p>
+
+            <p>
+                Hipp's response was that the Rule describes how he personally tries to live and how he
+                hopes the SQLite development community operates. It's not enforced; there's no conduct
+                committee reviewing pull requests for insufficient humility. It's aspirational, a
+                statement of values rather than a legal document.
+            </p>
+
+            <p>
+                In response to the controversy, the SQLite team added a "Code of Ethics" as an
+                alternative, adapted from the Rule but with the explicitly Christian language removed.
+                Both documents remain on the website. The incident reveals something about Hipp's
+                approach: he does things his own way, often unconventionally, and lets the work speak
+                for itself.
+            </p>
+
+            <h2>Serverless Before Serverless</h2>
+
+            <p>
+                Modern developers talk about "serverless" computing—cloud functions that run
+                without visible infrastructure. SQLite embodied that idea two decades before the term
+                existed, in the more literal sense: no server process at all.
+            </p>
+
+            <p>
+                This turns out to be prophetic. Edge computing, mobile applications, embedded systems,
+                WebAssembly in browsers: all of these environments need data storage, and none of them
+                want to manage a database server. SQLite runs everywhere because everywhere is its
+                natural habitat.
+            </p>
+
+            <p>
+                There's sql.js, a port of SQLite to JavaScript via Emscripten, running databases in
+                browsers. There's LiteStream, which continuously replicates SQLite databases to cloud
+                storage. There's rqlite, which clusters multiple SQLite instances with Raft consensus.
+                Each of these projects extends SQLite into territory its original design never
+                contemplated, and each of them works because the foundation is so solid.
+            </p>
+
+            <h2>Public Domain as Strategy</h2>
+
+            <p>
+                Return to the blessing. Return to the choice of public domain over any kind of license.
+            </p>
+
+            <p>
+                Conventional open source wisdom says you need a license to protect your work. The GPL
+                ensures derivatives stay open. MIT and BSD protect the author from liability. Apache
+                handles patents. Without a license, what do you have?
+            </p>
+
+            <p>
+                You have friction reduction taken to its logical extreme.
+            </p>
+
+            <p>
+                SQLite is in your phone not because Apple and Google love open source but because their
+                lawyers had nothing to review. It's in commercial products not because of developer
+                advocacy but because there's no compliance burden. It spreads not through enthusiasm
+                but through convenience.
+            </p>
+
+            <p>
+                The blessing acknowledges what public domain cannot enforce: ethics. You may do anything
+                with SQLite, but Hipp hopes you'll do good. You may take freely, but he hopes you'll
+                give back. The public domain removes legal obligations while the blessing suggests
+                moral ones.
+            </p>
+
+            <p>
+                Whether this is naive or profound depends on your view of human nature. What's
+                undeniable is that it worked. SQLite is ubiquitous not despite being public domain but
+                partly because of it. Radical generosity turned out to be an effective distribution
+                strategy.
+            </p>
+
+            <h2>Endurance</h2>
+
+            <p>
+                D. Richard Hipp still maintains SQLite. He wrote the first line in 2000 and he's still
+                writing code in 2024. He attends conferences. He answers mailing list questions. He
+                approves releases. The project has the continuity of a single guiding intelligence
+                rather than the committee dynamics of most large open source projects.
+            </p>
+
+            <p>
+                This is both strength and vulnerability. Hipp's deep knowledge of every line of code
+                makes SQLite meticulously maintained. His eventual absence will create a gap
+                that's difficult to fill. The Consortium model provides funding but not succession
+                planning.
+            </p>
+
+            <p>
+                For now, the battleship project that couldn't handle a missing DBA has become the
+                database that's too simple to fail. SQLite doesn't go down because there's nothing to
+                go down. It doesn't need administration because there's nothing to administer. It
+                solved Hipp's original problem so completely that it became the solution for everyone
+                else's problems too.
+            </p>
+
+            <p>
+                A trillion deployments, give or take. Zero configuration. Public domain. May you share
+                freely, never taking more than you give.
+            </p>
+        </div>
+
+        <aside class="related-section">
+            <h3 class="related-title">Related Projects</h3>
+            <a href="#" class="related-item">
+                <div class="related-item-name">PostgreSQL</div>
+                <div class="related-item-tagline">The most advanced open database</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">TeX/LaTeX</div>
+                <div class="related-item-tagline">Knuth's typesetting masterpiece</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">curl</div>
+                <div class="related-item-tagline">The internet's duct tape</div>
+            </a>
+        </aside>
+    </article>
+
+    <footer class="footer">
+        <p>
+            <a href="../">The Open Source Archive</a> &bull; A project of <a href="/">Dabblefish</a>
+        </p>
+    </footer>
+</body>
+</html>

@@ -19,3 +19,6 @@ _site/
 
 ## Venv
 .venv/
+
+## Temp
+tmp/

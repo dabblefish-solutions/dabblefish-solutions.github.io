@@ -21,6 +21,8 @@ exclude:
   - projects/public_domain_archive/hello.py
   - projects/public_domain_archive/main.py
   - projects/public_domain_archive/scripts/backups
+  - projects/open_source_archive/the-open-source-archive-vision.md
+  - tmp/
 
 # Theme settings
 theme_settings:

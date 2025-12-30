@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM and the Birth of Open Game Engines | The Open Source Archive</title>
+    <meta name="description" content="How id Software's 1997 source release spawned an industry of open game development and changed what 'giving back' means in gaming.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Rage Against the Machine: John Carmack, DOOM, and Open Game Engines">
+    <meta property="og:description" content="The story of how one of gaming's most iconic engines became free.">
+    <meta property="og:type" content="article">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-surface: #161b22;
+            --bg-elevated: #1c2128;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-gold: #d29922;
+            --accent-red: #f85149;
+            --font-heading: 'IBM Plex Serif', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        a { color: var(--accent-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: var(--text-primary); text-decoration: none; }
+
+        .article {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-subtitle {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #1a0a0a 0%, var(--bg-surface) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+        }
+
+        .hero-image-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            line-height: 1.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid var(--accent-red);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .article-content code {
+            font-family: var(--font-mono);
+            background: var(--bg-surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .placeholder-notice {
+            background: var(--bg-surface);
+            border: 1px dashed var(--accent-gold);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .placeholder-notice h3 {
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-body);
+        }
+
+        .placeholder-notice p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .related-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-title {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .related-item {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .related-item:hover {
+            background: var(--bg-primary);
+            text-decoration: none;
+        }
+
+        .related-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .related-item-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .article { padding: 2rem 1rem; }
+            .article-title { font-size: 2rem; }
+            .article-meta { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="../" class="back-link">
+                <span>&larr;</span>
+                <span>The Open Source Archive</span>
+            </a>
+        </div>
+    </header>
+
+    <article class="article">
+        <header class="article-header">
+            <div class="article-category">Origin Story</div>
+            <h1 class="article-title">Rage Against the Machine</h1>
+            <p class="article-subtitle">John Carmack, DOOM, and the Birth of Open Game Engines</p>
+            <div class="article-meta">
+                <span>12 min read</span>
+                <span>Play &bull; Liberation</span>
+            </div>
+        </header>
+
+        <div class="hero-image">
+            <div class="hero-image-icon">&#x1F47E;</div>
+            <p>Hero image placeholder</p>
+        </div>
+
+        <div class="article-content">
+            <p>
+                On December 23, 1997&mdash;Christmas Eve eve&mdash;John Carmack uploaded a file to an FTP server
+                that would change the game industry forever. The DOOM source code, the engine that had
+                redefined what PC games could do just four years earlier, was now free for anyone to study, modify,
+                and build upon. It arrived with a note, characteristically understated: "I don't have a
+                real good guess at how many people are going to be playing with this."
+            </p>
+
+            <p>
+                Tens of thousands, as it turned out. Then hundreds of thousands. The code would be ported
+                to every platform imaginable: iPods, graphing calculators, ATMs, pregnancy tests, a
+                hundred-foot jumbotron in Las Vegas. It would spawn an ecosystem of "source ports" that
+                continues to thrive nearly three decades later. It would establish a precedent that id
+                Software would follow with Quake, Quake II, Quake III, and Doom 3&mdash;each engine released
+                to the public once it was five years old, like clockwork.
+            </p>
+
+            <p>
+                The real gift was permission.
+            </p>
+
+            <h2>The Hacker Who Made It</h2>
+
+            <p>
+                To understand why Carmack gave DOOM away, you have to understand where he came from.
+                Not geographically&mdash;Kansas City, then Shreveport&mdash;but philosophically. Carmack
+                was a child of the <a href="https://en.wikipedia.org/wiki/Hacker_ethic">Hacker Ethic</a>,
+                that loosely codified set of principles that emerged from MIT's Tech Model Railroad Club
+                in the 1960s: information wants to be free, access to computers should be unlimited,
+                you should be judged by your hacks and nothing else.
+            </p>
+
+            <blockquote>
+                "All of science and technology and culture and learning and academics is built upon
+                using the work that others have done before. But to take a patenting approach and say,
+                'This idea is my idea, you cannot extend this idea in any way, because I own this
+                idea'&mdash;it just seems so fundamentally wrong."
+                <br>&mdash; John Carmack, as quoted in <em>Masters of Doom</em>
+            </blockquote>
+
+            <p>
+                Carmack had lived this philosophy. When the source code to Quake
+                was stolen and circulated underground, a programmer used it to create an unauthorized
+                Linux port, then sent the patches to id. Most companies would have called lawyers.
+                Carmack called it useful. At his behest, id Software adopted those patches as the
+                foundation for an official Linux release. The thief had done good work; the work
+                mattered more than the theft.
+            </p>
+
+            <p>
+                Both DOOM and Quake had been developed on NeXTSTEP, which itself ran on GNU tools.
+                "I don't subscribe to all the FSF dogma," Carmack would later write, "but I have
+                clearly benefited from their efforts." He was paying back a debt.
+            </p>
+
+            <h2>The Christmas Gift</h2>
+
+            <p>
+                The initial 1997 release came with restrictions&mdash;non-commercial use only, primarily
+                because of legal complications with the DMX sound library that id had licensed rather
+                than written. The Linux version was released because it had fewer entanglements.
+                Bernd Kreimeier tidied up the code before release, documenting his changes in a
+                changelog that itself became a teaching tool.
+            </p>
+
+            <p>
+                Two years later, on October 3, 1999, the restrictions lifted. After glDoom's source
+                code was lost in a hard drive crash and the community requested a cleaner license,
+                Carmack agreed to re-release under the GNU GPL. An email conversation was all it took.
+                No lawyers, no lengthy negotiations&mdash;just a programmer honoring a request from
+                other programmers.
+            </p>
+
+            <blockquote>
+                "Programming is not a zero-sum game. Teaching something to a fellow programmer
+                doesn't take it away from you. I'm happy to share what I can, because I'm in it
+                for the love of programming."
+                <br>&mdash; John Carmack
+            </blockquote>
+
+            <p>
+                Carmack would later express mild regret about choosing the GPL over the more
+                permissive BSD license&mdash;the copyleft requirement meant derivatives had to
+                remain open, which he came to see as unnecessarily restrictive. But the choice
+                didn't dampen the explosion that followed.
+            </p>
+
+            <h2>The Source Port Ecosystem</h2>
+
+            <p>
+                What Carmack released was not just a game engine. It was a Rosetta Stone for
+                aspiring game developers, written in clean, readable C. The code showed how
+                to do things that textbooks couldn't teach: how to build a renderer that ran
+                fast on commodity hardware, how to structure a game loop, how to think about
+                the relationship between visuals and gameplay.
+            </p>
+
+            <p>
+                Within months, the first "source ports" appeared&mdash;modified versions of the
+                engine that added features, fixed bugs, or targeted new platforms. Today, the
+                <a href="https://doomwiki.org/wiki/Source_port">Doom Wiki lists dozens</a>,
+                each with its own philosophy:
+            </p>
+
+            <p>
+                <strong><a href="https://www.chocolate-doom.org/">Chocolate Doom</a></strong>
+                (2005) aims for perfect authenticity, reproducing the original executable's
+                behavior so precisely that it deliberately preserves bugs&mdash;including ones
+                that crash the game. It exists to let players experience DOOM exactly as it
+                was in 1993, warts and all.
+            </p>
+
+            <p>
+                <strong><a href="https://zdoom.org/">GZDoom</a></strong> goes the opposite
+                direction: OpenGL rendering, 3D floors, dynamic lighting, mod scripting so
+                powerful that developers have built entirely new games on top of it. Some of
+                those games have shipped commercially, the DOOM engine serving as invisible
+                scaffolding.
+            </p>
+
+            <p>
+                <strong>Doom Legacy</strong>, <strong>Crispy Doom</strong>, <strong>PrBoom+</strong>&mdash;each
+                port represents a different answer to the question: what should DOOM become?
+                The community fractured not in acrimony but in abundance. Most serious players
+                keep multiple ports installed: one for mods, one for vanilla play, one for
+                multiplayer.
+            </p>
+
+            <p>
+                And then there are the novelty ports. DOOM on a thermostat. DOOM on a tractor's
+                display. DOOM on a digital camera. The game has become a kind of "Hello World"
+                for proving a platform is truly programmable&mdash;if it can run DOOM, it's a
+                real computer.
+            </p>
+
+            <h2>The Quake Cascade</h2>
+
+            <p>
+                DOOM's release established the pattern. When Quake's engine followed in 1999,
+                then Quake II in 2001, then Quake III in 2005, each release seeded new projects.
+                The Quake engine, true 3D where DOOM had been a clever illusion, became the
+                foundation for Half-Life. That lineage matters: Valve's Source engine, which
+                powered Counter-Strike and Portal, descends from code Carmack gave away.
+            </p>
+
+            <p>
+                The Quake III Arena source code gave rise to
+                <a href="https://ioquake3.org/">ioquake3</a>, a cleaned-up community fork that
+                fixed bugs and added features while maintaining compatibility. Games like
+                <strong>OpenArena</strong>, <strong>Xonotic</strong>, and <strong>World of Padman</strong>
+                were built directly on id's open engines&mdash;projects that would have been
+                impossible without corporate generosity that still has few parallels.
+            </p>
+
+            <p>
+                At QuakeCon 2007, Carmack confirmed the tradition would continue: id Tech 5
+                would eventually go open source too. "This is still the law of the land at id,"
+                he said, pledging to integrate as little proprietary middleware as possible to
+                keep future releases clean.
+            </p>
+
+            <p>
+                Then ZeniMax acquired id in 2009. Carmack left for Oculus in 2013. Id Tech 6
+                shipped with Doom (2016), and no source release followed. The law of the land
+                had changed landlords.
+            </p>
+
+            <h2>The Legacy</h2>
+
+            <p>
+                What did Carmack's gift actually accomplish? The easy answer is technical:
+                thousands of programmers learned from that code, carried its patterns into
+                their own work, built careers on foundations Carmack laid. The source ports
+                ensured DOOM would never die&mdash;it runs on modern systems better than many
+                games released last year.
+            </p>
+
+            <p>
+                But the harder answer is cultural. Carmack demonstrated that a company could
+                give away the source code to its flagship product and not just survive, but thrive. Id Software
+                continued to dominate the shooter genre for years after each release. The
+                code they gave away was always old code; the competitive advantage had already
+                moved on. What seemed like generosity was also good strategy.
+            </p>
+
+            <p>
+                "I was always a little disappointed that the example of id Software wasn't
+                followed by more companies," <a href="https://x.com/ID_AA_Carmack/status/1895507887658578403">Carmack
+                wrote recently</a>, watching another studio release vintage source. "Clearly,
+                it was a Good Thing for us."
+            </p>
+
+            <p>
+                The game industry never fully adopted id's model. Studios remained secretive;
+                engines stayed proprietary; the culture of game development diverged from
+                broader open source norms. But the path was marked. The proof existed. And
+                for a generation of developers who grew up reading that code, the hacker
+                ethic wasn't just history&mdash;it was something a real company had actually done.
+            </p>
+
+            <h2>What Remains</h2>
+
+            <p>
+                In 2024, GZDoom development hit a snag: allegations that the lead maintainer
+                had introduced AI-generated code, potentially violating the GPL. Developers
+                forked the project into UZDoom. The drama was bitter, the stakes real, the
+                outcome uncertain. But the fact that a fork was possible at all&mdash;that
+                the code remained open for anyone to take in a new direction&mdash;was
+                Carmack's gift still giving.
+            </p>
+
+            <p>
+                The DOOM source code sits on
+                <a href="https://github.com/id-Software/DOOM">GitHub now</a>,
+                archived and starred by thousands. The original release note is still there,
+                dated December 23, 1997: "If significant projects are undertaken, it would
+                be cool to see a level of community cooperation."
+            </p>
+
+            <p>
+                Significant projects were undertaken. The cooperation continues. And somewhere,
+                DOOM is running on a device it was never meant to run on, because a programmer
+                who loved the craft decided that code should be shared.
+            </p>
+        </div>
+
+        <aside class="related-section">
+            <h3 class="related-title">Related Projects</h3>
+            <a href="#" class="related-item">
+                <div class="related-item-name">Quake</div>
+                <div class="related-item-tagline">True 3D and modding culture</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">Godot</div>
+                <div class="related-item-tagline">The indie game engine revolution</div>
+            </a>
+            <a href="#" class="related-item">
+                <div class="related-item-name">Blender</div>
+                <div class="related-item-tagline">3D for the people</div>
+            </a>
+        </aside>
+    </article>
+
+    <footer class="footer">
+        <p>
+            <a href="../">The Open Source Archive</a> &bull; A project of <a href="/">Dabblefish</a>
+        </p>
+    </footer>
+</body>
+</html>
