@@ -2,10 +2,9 @@
 
 // ---------- TWEAKS (persist via localStorage) ----------
 const DEFAULTS = {
-  palette: "neon",     // "neon" | "gameboy" | "paper"
+  palette: "crt",      // "crt" | "neon" | "gameboy" | "paper"
   scanlines: "on",     // "on" | "off"
   scale: "chunky",     // "chunky" | "fine"
-  tone: "playful",     // "playful" | "deadpan"
 };
 
 function readTweaks() {
@@ -17,18 +16,11 @@ function writeTweaks(t) { localStorage.setItem("mb_tweaks", JSON.stringify(t)); 
 
 function applyTweaks(t) {
   const body = document.body;
-  if (t.palette === "neon") body.removeAttribute("data-palette");
+  if (t.palette === "crt") body.removeAttribute("data-palette");
   else body.setAttribute("data-palette", t.palette);
   body.setAttribute("data-scanlines", t.scanlines);
   body.setAttribute("data-scale", t.scale);
   document.documentElement.style.setProperty("--px", t.scale === "chunky" ? "4px" : "2px");
-  // tone swap — find [data-tone-playful] and [data-tone-deadpan] elements
-  document.querySelectorAll("[data-tone-playful]").forEach(el => {
-    el.style.display = t.tone === "playful" ? "" : "none";
-  });
-  document.querySelectorAll("[data-tone-deadpan]").forEach(el => {
-    el.style.display = t.tone === "deadpan" ? "" : "none";
-  });
 }
 
 function renderTweaksPanel() {
@@ -53,6 +45,7 @@ function renderTweaksPanel() {
       <label>PALETTE</label>
       <div class="swatches">
         ${[
+          ["crt",     ["#14e1e1","#eb28d2","#ffffff","#070a0d"]],
           ["neon",    ["#ff2d6f","#ffd93d","#3dffb8","#5d8eff"]],
           ["gameboy", ["#0f380f","#306230","#8bac0f","#9bbc0f"]],
           ["paper",   ["#f4ecd8","#1a1a1a","#d9381e","#1a1a1a"]],
@@ -77,19 +70,11 @@ function renderTweaksPanel() {
         <button class="opt ${t.scale==='fine'?'active':''}" data-sc="fine">FINE</button>
       </div>
     </div>
-    <div class="tweak-row">
-      <label>TONE</label>
-      <div class="opts">
-        <button class="opt ${t.tone==='playful'?'active':''}" data-tn="playful">PLAYFUL</button>
-        <button class="opt ${t.tone==='deadpan'?'active':''}" data-tn="deadpan">DEADPAN</button>
-      </div>
-    </div>
   `;
 
   panel.querySelectorAll("[data-pal]").forEach(b => b.onclick = () => set("palette", b.dataset.pal));
   panel.querySelectorAll("[data-sl]").forEach(b => b.onclick = () => set("scanlines", b.dataset.sl));
   panel.querySelectorAll("[data-sc]").forEach(b => b.onclick = () => set("scale", b.dataset.sc));
-  panel.querySelectorAll("[data-tn]").forEach(b => b.onclick = () => set("tone", b.dataset.tn));
   document.getElementById("tweaks-close").onclick = () => {
     panel.classList.remove("open");
     document.getElementById("tweaks-toggle").style.display = "";
@@ -229,19 +214,33 @@ function initNewsletter() {
   };
 }
 
-// ---------- SPONSOR FORM ----------
+// ---------- CONTACT FORMS ----------
 function initSponsorForm() {
-  const form = document.getElementById("sponsor-form");
-  if (!form) return;
-  form.onsubmit = e => {
-    e.preventDefault();
-    const company = form.querySelector('[name="company"]').value;
-    if (!company) { showToast("ERROR: COMPANY REQUIRED", 1800); return; }
-    form.innerHTML = `
-      <h3 style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--mint);margin-bottom:14px;">▶ MESSAGE QUEUED</h3>
-      <p style="font-size:20px;">Thanks, ${company}. We'll reply within 48hrs — usually with a weird AI story attached. Stay tuned to your inbox.</p>
-    `;
-  };
+  const sponsor = document.getElementById("sponsor-form");
+  if (sponsor) {
+    sponsor.onsubmit = e => {
+      e.preventDefault();
+      const company = sponsor.querySelector('[name="company"]').value;
+      if (!company) { showToast("ERROR: COMPANY REQUIRED", 1800); return; }
+      sponsor.innerHTML = `
+        <h3 style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--mint);margin-bottom:14px;">▶ MESSAGE QUEUED</h3>
+        <p style="font-size:20px;">Thanks, ${company}. We'll reply within 48hrs — usually with a weird AI story attached. Stay tuned to your inbox.</p>
+      `;
+    };
+  }
+
+  const general = document.getElementById("general-form");
+  if (general) {
+    general.onsubmit = e => {
+      e.preventDefault();
+      const name = general.querySelector('[name="name"]').value;
+      if (!name) { showToast("ERROR: NAME REQUIRED", 1800); return; }
+      general.innerHTML = `
+        <h3 style="font-family:'Press Start 2P',monospace;font-size:16px;color:var(--mint);margin-bottom:14px;">▶ TRANSMISSION RECEIVED</h3>
+        <p style="font-size:20px;">Thanks, ${name}. We read every message. We don't always reply, but we usually do — especially if you brought receipts.</p>
+      `;
+    };
+  }
 }
 
 // ---------- PIXEL ART RENDERER ----------
@@ -298,8 +297,9 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tweaks-toggle").style.display = "none";
   });
 
-  const wm = document.querySelector("[data-wordmark]");
-  if (wm) buildWordmark(wm, wm.getAttribute("data-wordmark"));
+  document.querySelectorAll("[data-wordmark]").forEach(el => {
+    buildWordmark(el, el.getAttribute("data-wordmark"));
+  });
 
   initPlayer();
   initKonami();

@@ -21,7 +21,7 @@
     <nav class="nav">
       <a href="index.html" class="active">HOME</a>
       <a href="episodes.html">EPISODES</a>
-      <a href="sponsor.html">SPONSOR</a>
+      <a href="contact.html">CONTACT</a>
     </nav>
   </div>
 </header>
@@ -30,14 +30,10 @@
 <section class="hero" data-screen-label="01 Hero">
   <div class="wrap">
     <h1 class="wordmark" data-wordmark="MODEL BEHAVIOR" aria-label="Model Behavior"></h1>
-    <p class="tagline" data-tone-playful>▼ A PODCAST ABOUT WEIRD AI ▼</p>
-    <p class="tagline" data-tone-deadpan style="display:none">▼ FIELD NOTES ON AI MISBEHAVIOR ▼</p>
+    <p class="tagline">▼ A PODCAST ABOUT WEIRD AI ▼</p>
 
-    <p class="blurb" data-tone-playful>
+    <p class="blurb">
       Annu and David collect the strangest, funniest, and most unsettling things AI has ever done — then try to figure out what on earth happened.
-    </p>
-    <p class="blurb" data-tone-deadpan style="display:none">
-      A weekly investigation into the unexplained behaviors of large language models, image generators, and the agents we have built on top of them.
     </p>
 
     <div class="cta-row">
@@ -48,6 +44,7 @@
 </section>
 
 <!-- ===== MARQUEE ===== -->
+<!-- MAINTAIN: marquee — short hype lines, swap when a new episode drops. Keep ~5-7 items, ~30-50 chars each. Sprinkle ✦ separators. -->
 <div class="marquee" aria-hidden="true">
   <div class="track">
     <span>★ NEW EP DROPS EVERY TUESDAY</span>
@@ -64,6 +61,16 @@
 </div>
 
 <!-- ===== LATEST EPISODE ===== -->
+<!-- MAINTAIN: latest-episode — update every release. Fields to change:
+     - .tag (category chip)
+     - h3 (episode title)
+     - .ep-meta spans (EP NN, MM:SS, MMM DD, YYYY)
+     - .ep-desc paragraph (description)
+     - .player data-duration (seconds) and .total (MM:SS)
+     - .ep-num label
+     - .label (EP_NN)
+     - Section meta: "RECORDED MM.DD.YYYY · MM:SS RUNTIME"
+     - The ART_NN ascii block at the bottom of this file -->
 <section class="section" id="latest" data-screen-label="02 Latest Episode">
   <div class="wrap">
     <div class="section-head">
@@ -88,11 +95,8 @@
           <span class="dot">■</span>
           <span>MAY 12, 2026</span>
         </div>
-        <p class="ep-desc" data-tone-playful>
+        <p class="ep-desc">
           A haunted-looking woman keeps showing up in negative-weighted prompts. We trace her origin, interview the artist who found her, and ask the obvious question: do image models have ghosts? (Probably not. We talk about it for 45 minutes anyway.)
-        </p>
-        <p class="ep-desc" data-tone-deadpan style="display:none">
-          We examine the 2022 emergence of "Loab," a recurring figure produced by negatively-weighted prompts in text-to-image diffusion models, and discuss what the artifact tells us about the geometry of learned representations.
         </p>
 
         <div class="player" data-duration="2742">
@@ -118,6 +122,7 @@
 </section>
 
 <!-- ===== HOSTS ===== -->
+<!-- MAINTAIN: hosts — bios are static; only touch if hosts/copy change. -->
 <section class="section" data-screen-label="03 Hosts">
   <div class="wrap">
     <div class="section-head">
@@ -130,8 +135,7 @@
         <div>
           <h3>ANNU</h3>
           <div class="role">HALF OF THE SHOW</div>
-          <p data-tone-playful>Spends an unhealthy amount of time talking to chatbots that have clearly gone off the rails. Has a soft spot for any model that thinks it&rsquo;s a fictional character.</p>
-          <p data-tone-deadpan style="display:none">Researcher and writer covering AI safety, alignment, and the failure modes thereof. Previously a software engineer.</p>
+          <p>Spends an unhealthy amount of time talking to chatbots that have clearly gone off the rails. Has a soft spot for any model that thinks it&rsquo;s a fictional character.</p>
         </div>
       </div>
       <div class="host">
@@ -139,8 +143,7 @@
         <div>
           <h3>DAVID</h3>
           <div class="role">OTHER HALF</div>
-          <p data-tone-playful>Once spent six hours trying to convince an LLM that it was, in fact, a toaster. Now hosts a podcast. There may be a connection.</p>
-          <p data-tone-deadpan style="display:none">Writes about emergent behaviors in foundation models and the engineering challenges of building reliable agentic systems.</p>
+          <p>Once spent six hours trying to convince an LLM that it was, in fact, a toaster. Now hosts a podcast. There may be a connection.</p>
         </div>
       </div>
     </div>
@@ -152,8 +155,7 @@
   <div class="wrap">
     <div class="newsletter">
       <h3>▶ WEIRD AI NEWS, WEEKLY</h3>
-      <p data-tone-playful>Get the unhinged-AI story of the week, delivered before your group chat does.</p>
-      <p data-tone-deadpan style="display:none">A weekly digest of notable AI behaviors and incident reports. No fluff.</p>
+      <p>Get the unhinged-AI story of the week, delivered before your group chat does.</p>
       <form>
         <input type="email" placeholder="you@somewhere.weird" required>
         <button type="submit" class="btn btn-yellow">SUBSCRIBE</button>
@@ -173,7 +175,7 @@
       <a href="#">RSS</a>
       <a href="#">BSKY</a>
       <a href="#">X</a>
-      <a href="#">CONTACT</a>
+      <a href="contact.html">CONTACT</a>
     </div>
   </div>
 </footer>
@@ -219,12 +221,12 @@ const ART_04 = `
 `;
 
 const PAL_04 = {
-  '.': '#1f1f3d',
-  'k': '#0a0a1f',
-  'd': '#2a2a52',
-  'p': '#b85dff',
-  'w': '#f0f0ff',
-  'm': '#3dffb8',
+  '.': '#0d1216',
+  'k': '#070a0d',
+  'd': '#1e272f',
+  'p': '#eb28d2',
+  'w': '#ffffff',
+  'm': '#14e1e1',
 };
 
 renderPixelArt(document.getElementById('art-04'), ART_04, PAL_04);
@@ -249,13 +251,13 @@ const AVA_ANNU = `
 ................
 `;
 const PAL_ANNU = {
-  '.': '#15152e',
+  '.': '#0d1216',
   'd': '#3a2a1a',
   'y': '#e8c89c',
   'w': '#1a1a1a',
-  'k': '#f0f0ff',
-  'm': '#ff2d6f',
-  'p': '#ffd93d',
+  'k': '#ffffff',
+  'm': '#eb28d2',
+  'p': '#14e1e1',
 };
 renderPixelArt(document.getElementById('avatar-annu'), AVA_ANNU, PAL_ANNU);
 
@@ -278,13 +280,13 @@ const AVA_DAVID = `
 ................
 `;
 const PAL_DAVID = {
-  '.': '#15152e',
+  '.': '#0d1216',
   'w': '#2a1a0f',
   'k': '#1a1a1a',
   'y': '#d4a574',
-  'b': '#0a0a1f',
-  'm': '#5d8eff',
-  'p': '#3dffb8',
+  'b': '#070a0d',
+  'm': '#14e1e1',
+  'p': '#eb28d2',
 };
 renderPixelArt(document.getElementById('avatar-david'), AVA_DAVID, PAL_DAVID);
 </script>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sponsor — Model Behavior</title>
+<title>Contact — Model Behavior</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -20,28 +20,85 @@
     <nav class="nav">
       <a href="index.html">HOME</a>
       <a href="episodes.html">EPISODES</a>
-      <a href="sponsor.html" class="active">SPONSOR</a>
+      <a href="contact.html" class="active">CONTACT</a>
     </nav>
   </div>
 </header>
 
 <!-- ===== HERO ===== -->
-<section class="hero" style="padding:60px 0 30px;" data-screen-label="01 Sponsor Hero">
+<section class="hero" style="padding:60px 0 30px;" data-screen-label="01 Contact Hero">
   <div class="wrap">
-    <h1 class="wordmark" data-wordmark="SPONSOR US" style="font-size:48px;margin-bottom:24px;" aria-label="Sponsor Us"></h1>
-    <p class="tagline" data-tone-playful>▼ PUT YOUR BRAND IN FRONT OF PEOPLE WHO ARGUE WITH CHATBOTS FOR FUN ▼</p>
-    <p class="tagline" data-tone-deadpan style="display:none">▼ SPONSORSHIP OPPORTUNITIES ▼</p>
-    <p class="blurb" data-tone-playful style="margin-top:20px;">
-      Our listeners are AI researchers, engineers, founders, and people who think the words &ldquo;tungsten cube&rdquo; are intrinsically funny. There&rsquo;s probably overlap.
+    <h1 class="wordmark" data-wordmark="CONTACT" style="font-size:48px;margin-bottom:24px;" aria-label="Contact"></h1>
+    <p class="tagline">▼ TWO WAYS TO TALK TO US ▼</p>
+    <p class="blurb" style="margin-top:20px;">
+      Got a wild AI story? Want to send fan mail, hate mail, or a corporate offer? Pick the right form below.
     </p>
-    <p class="blurb" data-tone-deadpan style="display:none; margin-top:20px;">
-      Reach a focused audience of AI practitioners, researchers, and technology operators. Weekly cadence. Read by hosts in-episode.
+  </div>
+</section>
+
+<!-- ===== GENERAL CONTACT ===== -->
+<section class="section" id="general" data-screen-label="02 General Contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2><span class="pre">▶</span> SAY HI</h2>
+      <span class="meta">STORY TIPS · PRESS · FAN MAIL · HATE MAIL</span>
+    </div>
+
+    <form class="sponsor-form" id="general-form">
+      <div class="row">
+        <div>
+          <label>YOUR NAME</label>
+          <input type="text" name="name" placeholder="Ada Lovelace" required>
+        </div>
+        <div>
+          <label>EMAIL</label>
+          <input type="email" name="email" placeholder="ada@diff.engine" required>
+        </div>
+      </div>
+      <div>
+        <label>WHAT'S THIS ABOUT?</label>
+        <select name="topic">
+          <option>I HAVE A WEIRD AI STORY</option>
+          <option>EPISODE IDEA / GUEST PITCH</option>
+          <option>PRESS / INTERVIEW REQUEST</option>
+          <option>I JUST WANTED TO SAY HI</option>
+          <option>OTHER</option>
+        </select>
+      </div>
+      <div>
+        <label>YOUR MESSAGE</label>
+        <textarea name="msg" placeholder="Tell us what's on your mind. Tungsten cubes welcome." required></textarea>
+      </div>
+      <div>
+        <button type="submit" class="btn">▶ SEND</button>
+      </div>
+    </form>
+
+    <p style="font-size:18px; color:var(--muted); margin-top:18px; text-align:center;">
+      Or email us directly at <a href="mailto:hi@modelbehavior.fm">hi@modelbehavior.fm</a>
+    </p>
+  </div>
+</section>
+
+<!-- ===== DIVIDER ===== -->
+<div class="wrap">
+  <hr class="pixel-rule">
+</div>
+
+<!-- ===== SPONSOR SECTION ===== -->
+<section class="section" id="sponsor" data-screen-label="03 Sponsor Intro" style="padding-top:30px;">
+  <div class="wrap">
+    <h2 class="wordmark" data-wordmark="SPONSOR US" style="font-size:32px; margin-bottom:18px; text-align:center; display:block;" aria-label="Sponsor Us"></h2>
+    <p class="tagline" style="text-align:center;">▼ PUT YOUR BRAND IN FRONT OF PEOPLE WHO ARGUE WITH CHATBOTS FOR FUN ▼</p>
+    <p class="blurb" style="margin: 20px auto 0; text-align:center;">
+      Our listeners are AI researchers, engineers, founders, and people who think the words &ldquo;tungsten cube&rdquo; are intrinsically funny. There&rsquo;s probably overlap.
     </p>
   </div>
 </section>
 
 <!-- ===== STATS ===== -->
-<section class="section" style="padding-top:20px;" data-screen-label="02 Stats">
+<!-- MAINTAIN: sponsor-stats — refresh quarterly with actual numbers. -->
+<section class="section" style="padding-top:20px;" data-screen-label="04 Stats">
   <div class="wrap">
     <div class="section-head">
       <h2><span class="pre">▶</span> BY THE NUMBERS</h2>
@@ -72,7 +129,7 @@
 </section>
 
 <!-- ===== TIERS ===== -->
-<section class="section" data-screen-label="03 Tiers">
+<section class="section" data-screen-label="05 Tiers">
   <div class="wrap">
     <div class="section-head">
       <h2><span class="pre">▶</span> AD SLOTS</h2>
@@ -91,7 +148,7 @@
           <li>Logo on episode page</li>
           <li>Newsletter mention</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
+        <a href="#sponsor-inquire" class="btn btn-ghost" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
       </div>
 
       <div class="tier featured">
@@ -105,7 +162,7 @@
           <li>Newsletter feature</li>
           <li>Social post on launch day</li>
         </ul>
-        <a href="#contact" class="btn" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
+        <a href="#sponsor-inquire" class="btn" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
       </div>
 
       <div class="tier">
@@ -119,7 +176,7 @@
           <li>Bonus segment per season</li>
           <li>First refusal on next season</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
+        <a href="#sponsor-inquire" class="btn btn-ghost" style="width:100%;justify-content:center;">INQUIRE <span class="parrow"></span></a>
       </div>
 
     </div>
@@ -127,7 +184,8 @@
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
-<section class="section" data-screen-label="04 Testimonials">
+<!-- MAINTAIN: sponsor-testimonials — rotate/add as new sponsors come in. -->
+<section class="section" data-screen-label="06 Testimonials">
   <div class="wrap">
     <div class="section-head">
       <h2><span class="pre">▶</span> FROM PAST SPONSORS</h2>
@@ -146,11 +204,11 @@
   </div>
 </section>
 
-<!-- ===== CONTACT FORM ===== -->
-<section class="section" id="contact" data-screen-label="05 Contact">
+<!-- ===== SPONSOR INQUIRY FORM ===== -->
+<section class="section" id="sponsor-inquire" data-screen-label="07 Sponsor Inquire">
   <div class="wrap">
     <div class="section-head">
-      <h2><span class="pre">▶</span> GET IN TOUCH</h2>
+      <h2><span class="pre">▶</span> SPONSORSHIP INQUIRY</h2>
       <span class="meta">WE REPLY WITHIN 48H</span>
     </div>
     <form class="sponsor-form" id="sponsor-form">
@@ -201,7 +259,7 @@
       <a href="#">RSS</a>
       <a href="#">BSKY</a>
       <a href="#">X</a>
-      <a href="#">CONTACT</a>
+      <a href="contact.html">CONTACT</a>
     </div>
   </div>
 </footer>
