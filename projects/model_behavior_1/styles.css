@@ -1081,6 +1081,14 @@ p:last-child { margin-bottom: 0; }
   clear: both;
 }
 
+.ep-card .ep-audio {
+  width: 100%;
+  margin-top: 4px;
+  clear: both;
+  background: var(--bg);
+  border: 2px solid var(--line);
+}
+
 .ep-card .mini-btn {
   font-family: 'Press Start 2P', monospace;
   font-size: 9px;
