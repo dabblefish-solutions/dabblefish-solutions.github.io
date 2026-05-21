@@ -14,11 +14,10 @@ Find `<!-- MAINTAIN: latest-episode -->` and update:
 - Episode title in `<h3>`
 - Episode number, runtime, date in `.ep-meta`
 - `.ep-desc` paragraph (the description)
-- `data-duration` on `<div class="player">` (seconds — used by the fake player)
-- `.total` text inside `.times` (formatted as MM:SS)
 - The `.ep-num` label ("04" → "05")
+- The `.label` chip ("EP_04" → "EP_05")
 - The pixel-art block at the bottom of `index.html` (`const ART_04 = ...`) — either replace with a new ascii grid for the new episode, or just rename the variable.
-- Section meta line: `RECORDED MM.DD.YYYY · MM:SS RUNTIME`
+- Section meta line: `RELEASED MM.DD.YYYY · MM:SS RUNTIME`
 
 ### 2. `index.html` — Ticker / Marquee
 Find `<!-- MAINTAIN: marquee -->` and update the `<span>` items inside `.track`. These are short hype lines that should change when a new episode drops — current ones reference Claudius/tungsten, swap in references to the new episode.
@@ -75,5 +74,5 @@ These are all driven from CSS custom properties and don't require any per-episod
 | `episodes.html` | All episodes grid + next-up teaser |
 | `contact.html` | General contact form (top) + sponsor info (bottom) |
 | `styles.css` | All visual styles, including palette CSS variables |
-| `app.js` | Tweaks panel, fake audio player, konami, forms, pixel-art renderer |
+| `app.js` | Tweaks panel, konami easter egg, forms, pixel-art renderer |
 | `wordmark.svg` | Original chunky-pixel wordmark (currently unused on hero — kept for favicons, OG images, etc.) |

@@ -118,111 +118,6 @@ function buildWordmark(el, text) {
   }, 1400);
 }
 
-// ---------- AUDIO PLAYER ----------
-// If the .player div has data-audio="<url>", drive the UI from a real <audio>
-// element. Otherwise fall back to a fake counter so the UI still animates.
-function initPlayer() {
-  const player = document.querySelector(".player");
-  if (!player) return;
-  const playBtn = player.querySelector(".play-btn");
-  const fill = player.querySelector(".bar-fill");
-  const bar = player.querySelector(".bar");
-  const curEl = player.querySelector(".cur");
-  const totalEl = player.querySelector(".total");
-  const fallbackTotal = parseInt(player.dataset.duration || "2742", 10);
-  const audioSrc = player.dataset.audio;
-
-  const fmt = s => {
-    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-    return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-  };
-
-  if (audioSrc) {
-    const audio = new Audio();
-    audio.preload = "metadata";
-    audio.src = audioSrc;
-
-    totalEl.textContent = fmt(fallbackTotal);
-    audio.addEventListener("loadedmetadata", () => {
-      if (isFinite(audio.duration)) totalEl.textContent = fmt(audio.duration);
-    });
-    audio.addEventListener("timeupdate", () => {
-      const total = isFinite(audio.duration) ? audio.duration : fallbackTotal;
-      if (total) fill.style.width = `${(audio.currentTime / total) * 100}%`;
-      curEl.textContent = fmt(audio.currentTime);
-    });
-    audio.addEventListener("ended", () => { playBtn.textContent = "▶"; });
-    audio.addEventListener("error", () => {
-      showToast("AUDIO LOAD FAILED", 2200);
-    });
-
-    playBtn.onclick = () => {
-      if (audio.paused) { audio.play(); playBtn.textContent = "❚❚"; }
-      else { audio.pause(); playBtn.textContent = "▶"; }
-    };
-    bar.onclick = (e) => {
-      const rect = bar.getBoundingClientRect();
-      const total = isFinite(audio.duration) ? audio.duration : fallbackTotal;
-      if (total) audio.currentTime = ((e.clientX - rect.left) / rect.width) * total;
-    };
-    return;
-  }
-
-  // Fake fallback (used when no MP3 is wired up)
-  let cur = 0, playing = false, interval = null;
-  const render = () => {
-    fill.style.width = `${(cur / fallbackTotal) * 100}%`;
-    curEl.textContent = fmt(cur);
-  };
-  totalEl.textContent = fmt(fallbackTotal);
-  const toggle = () => {
-    playing = !playing;
-    playBtn.textContent = playing ? "❚❚" : "▶";
-    if (playing) {
-      interval = setInterval(() => {
-        cur += 1;
-        if (cur >= fallbackTotal) { cur = 0; toggle(); }
-        render();
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-  };
-  playBtn.onclick = toggle;
-  bar.onclick = (e) => {
-    const rect = bar.getBoundingClientRect();
-    cur = Math.floor(((e.clientX - rect.left) / rect.width) * fallbackTotal);
-    render();
-  };
-  render();
-}
-
-// ---------- EPISODE CARD PLAYERS ----------
-// Each .ep-card PLAY button can carry data-audio="<mp3 url>". On click, the
-// actions row is hidden and a native <audio controls> element is inserted
-// inline below it so playback happens in-page.
-function initEpisodePlayers() {
-  document.querySelectorAll(".ep-card .mini-btn.primary[data-audio]").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const url = btn.dataset.audio;
-      const actions = btn.closest(".ep-actions");
-      if (!actions || actions.dataset.expanded === "1") return;
-      actions.dataset.expanded = "1";
-
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.autoplay = true;
-      audio.preload = "metadata";
-      audio.src = url;
-      audio.className = "ep-audio";
-      actions.style.display = "none";
-      actions.parentNode.insertBefore(audio, actions.nextSibling);
-      audio.addEventListener("error", () => showToast("AUDIO LOAD FAILED", 2200));
-    });
-  });
-}
-
 // ---------- TOAST ----------
 function showToast(text, ms = 2400) {
   let toast = document.getElementById("mb-toast");
@@ -359,8 +254,6 @@ window.addEventListener("DOMContentLoaded", () => {
     buildWordmark(el, el.getAttribute("data-wordmark"));
   });
 
-  initPlayer();
-  initEpisodePlayers();
   initKonami();
   initNewsletter();
   initSponsorForm();
