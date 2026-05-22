@@ -18,6 +18,7 @@ Find `<!-- MAINTAIN: latest-episode -->` and update:
 - The `.label` chip ("EP_04" → "EP_05")
 - The pixel-art block at the bottom of `index.html` (`const ART_04 = ...`) — either replace with a new ascii grid for the new episode, or just rename the variable.
 - Section meta line: `RELEASED MM.DD.YYYY · MM:SS RUNTIME`
+- Also update the **hero CTA** at the top of the page (`▶ PLAY LATEST EP`) and the **SPOTIFY / APPLE chips** in `.listen-on` to point at the new episode (see "Per-episode platform URLs" below).
 
 ### 2. `index.html` — Ticker / Marquee
 Find `<!-- MAINTAIN: marquee -->` and update the `<span>` items inside `.track`. These are short hype lines that should change when a new episode drops — current ones reference Claudius/tungsten, swap in references to the new episode.
@@ -25,7 +26,8 @@ Find `<!-- MAINTAIN: marquee -->` and update the `<span>` items inside `.track`.
 ### 3. `episodes.html` — Episode grid
 Find `<!-- MAINTAIN: episode-grid -->`. To add the new episode:
 - Copy the topmost `<article class="ep-card">` block, paste a duplicate above it
-- Update all fields (tag, h3, ep-meta, ep-desc, unhinged rating meter segments, transcript teaser)
+- Update all fields (tag, h3, ep-meta, ep-desc)
+- Update the `▶ SPOTIFY` and `APPLE` links in `.ep-actions` (see "Per-episode platform URLs" below)
 - Add a new pixel-art block at the bottom (`const ART_05 = ...`) and a renderPixelArt call
 - Update the section meta: `N EPISODES · SEASON X`
 
@@ -33,7 +35,31 @@ Find `<!-- MAINTAIN: episode-grid -->`. To add the new episode:
 Find `<!-- MAINTAIN: next-episode-teaser -->`. Update the EP NN+1 hint to point to what's coming after.
 
 ### 5. RSS / podcast platforms (out of scope of this codebase)
-Update Spotify, Apple, YouTube, RSS feed independently.
+Update Spotify, Apple, RSS feed independently.
+
+---
+
+## Per-episode platform URLs
+
+Spotify and Apple Podcasts both use their own internal episode IDs that are **not** in our RSS feed. To grab them after a new episode goes live:
+
+### Spotify
+1. Open the show on Spotify: <https://open.spotify.com/show/4GivgXuwvjhk0L9VlSCZFH>
+2. Right-click the new episode → "Copy link" → that gives you `https://open.spotify.com/episode/<id>?si=...` — strip the `?si=...` tracking param, what's left is the canonical URL.
+
+Or scrape all of them with:
+```sh
+curl -sL "https://open.spotify.com/show/4GivgXuwvjhk0L9VlSCZFH" -A "Mozilla/5.0" \
+  | grep -oE '/episode/[A-Za-z0-9]{22}' | sort -u
+```
+
+### Apple Podcasts
+The iTunes Lookup API returns the latest episodes with `trackViewUrl` mapped:
+```sh
+curl -sL "https://itunes.apple.com/lookup?id=1896064622&entity=podcastEpisode&limit=20" \
+  | python3 -c "import json,sys; [print(r['trackName'], '→', r['trackViewUrl']) for r in json.load(sys.stdin)['results'] if r.get('wrapperType')=='podcastEpisode']"
+```
+Strip the trailing `&uo=4` analytics param from each URL.
 
 ---
 
