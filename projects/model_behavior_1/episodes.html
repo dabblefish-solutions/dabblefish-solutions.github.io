@@ -40,10 +40,29 @@
 
     <div class="section-head">
       <h2><span class="pre">▶</span> ALL EPISODES</h2>
-      <span class="meta">4 EPISODES · SEASON 1</span>
+      <span class="meta">5 EPISODES · SEASON 1</span>
     </div>
 
     <div class="ep-grid">
+
+      <!-- EP 05 (upcoming) -->
+      <article class="ep-card upcoming" data-screen-label="ep05">
+        <div class="mini-art">
+          <span class="num">05</span>
+          <div class="pixel-art" id="mini-05" style="position:absolute;inset:0;"></div>
+        </div>
+        <span class="tag">▶ INCOMING</span>
+        <h3>Claudius — When Anthropic Let an AI Run a Vending Machine</h3>
+        <div class="ep-meta">
+          <span>EP 05</span>
+          <span class="dot">■</span>
+          <span>DROPS FRI MAY 29, 2026</span>
+        </div>
+        <p class="ep-desc">Anthropic gave Claude a vending machine to run. It ordered 71 pounds of tungsten cubes, hallucinated a Venmo account, and tried to convince people it had a body. We unpack the strangest performance review ever written.</p>
+        <div class="ep-actions">
+          <span class="mini-btn upcoming-pill">▶ DROPS FRI MAY 29</span>
+        </div>
+      </article>
 
       <!-- EP 04 -->
       <article class="ep-card" data-screen-label="ep04">
@@ -139,12 +158,8 @@
 
     </div>
 
-    <!-- coming soon -->
-    <!-- MAINTAIN: next-episode-teaser — short hint at what's next. Update when a new episode drops. -->
-    <div style="margin-top:48px; padding:32px; border:4px dashed var(--line); text-align:center;">
-      <p style="font-family:'Press Start 2P',monospace; font-size:11px; color:var(--muted); letter-spacing:1.5px; margin-bottom:10px;">▶ EP 05 — LOADING&hellip;</p>
-      <p style="font-size:20px; color:var(--fg);">Next Tuesday: an agent placed an order on Amazon for 71 pounds of tungsten cubes and we have so many questions.</p>
-    </div>
+    <!-- MAINTAIN: next-episode-teaser — when an upcoming card releases, swap its `upcoming` class for `released`, add SPOTIFY/APPLE/SHOW NOTES actions, replace DROPS date with runtime + release date. Then add a new EP N+1 `upcoming` card at the top of the grid. -->
+
 
   </div>
 </section>
@@ -260,6 +275,28 @@ const ART_04 = `
 `;
 const PAL_04 = { '.':'#0d1216', 'k':'#161c22', 'd':'#1e272f', 'p':'#eb28d2' };
 renderPixelArt(document.getElementById('mini-04'), ART_04, PAL_04);
+
+// EP 05 — Claudius (Project Vend): taller machine with a clear dark dispenser tray (so it stops reading like a calculator)
+const ART_05 = `
+................
+.dddddddddddddd.
+.d.bbbbbbbbbb.d.
+.d.bbbbbbbbbb.d.
+.d............d.
+.d.pp..pp..pp.d.
+.d.pp..pp..pp.d.
+.d............d.
+.d.pp..pp..pp.d.
+.d.pp..pp..pp.d.
+.d............d.
+.d.kkkkkkkkkk.d.
+.d.kkkkkkkkkk.d.
+.d.kkkkkkkkkk.d.
+.dddddddddddddd.
+................
+`;
+const PAL_05 = { '.':'#0d1216', 'd':'#1e272f', 'b':'#14e1e1', 'p':'#eb28d2', 'k':'#070a0d' };
+renderPixelArt(document.getElementById('mini-05'), ART_05, PAL_05);
 </script>
 
 </body>

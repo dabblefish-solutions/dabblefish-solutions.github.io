@@ -24,15 +24,28 @@ Find `<!-- MAINTAIN: latest-episode -->` and update:
 Find `<!-- MAINTAIN: marquee -->` and update the `<span>` items inside `.track`. These are short hype lines that should change when a new episode drops — current ones reference Claudius/tungsten, swap in references to the new episode.
 
 ### 3. `episodes.html` — Episode grid
-Find `<!-- MAINTAIN: episode-grid -->`. To add the new episode:
-- Copy the topmost `<article class="ep-card">` block, paste a duplicate above it
-- Update all fields (tag, h3, ep-meta, ep-desc)
-- Update the `▶ SPOTIFY` and `APPLE` links in `.ep-actions` (see "Per-episode platform URLs" below)
-- Add a new pixel-art block at the bottom (`const ART_05 = ...`) and a renderPixelArt call
-- Update the section meta: `N EPISODES · SEASON X`
+Find `<!-- MAINTAIN: episode-grid -->`. The grid is **newest first**, top-left.
 
-### 4. `episodes.html` — "Coming up next" teaser
-Find `<!-- MAINTAIN: next-episode-teaser -->`. Update the EP NN+1 hint to point to what's coming after.
+**When an upcoming episode releases** (e.g. EP 05 goes live):
+- Find the `<article class="ep-card upcoming">` for that episode at the top of the grid.
+- Remove the `upcoming` class from the `<article>`.
+- Replace the `INCOMING` tag with a proper category chip (e.g. `<span class="tag tag-purple">CRYPTID FILES</span>`).
+- Replace `DROPS FRI MMM DD, YYYY` in `.ep-meta` with the actual `MM:SS` runtime and `MMM DD, YYYY` release date (3 spans).
+- Refine `.ep-desc` if needed.
+- Replace the single `<span class="mini-btn upcoming-pill">` action with the standard three actions:
+  ```html
+  <a class="mini-btn primary" href="https://open.spotify.com/episode/<id>" target="_blank" rel="noopener">▶ SPOTIFY</a>
+  <a class="mini-btn" href="https://podcasts.apple.com/us/podcast/<slug>/id1896064622?i=<trackId>" target="_blank" rel="noopener">APPLE</a>
+  <button class="mini-btn">SHOW NOTES</button>
+  ```
+  See "Per-episode platform URLs" below for how to look up the IDs.
+
+**Then add the next upcoming episode** at the top:
+- Copy the now-released card, paste a duplicate above it, add the `upcoming` class back, reset the tag/meta/actions, and add a matching `ART_NN` pixel-art block + `renderPixelArt()` call at the bottom of this file.
+- Bump the section meta: `N EPISODES · SEASON X`.
+
+### 4. `episodes.html` — "Coming up next"
+The upcoming episode lives **inside the grid** as the top-left `<article class="ep-card upcoming">`. See step 3 above for the upcoming → released conversion when it goes live, and how to add the next one.
 
 ### 5. RSS / podcast platforms (out of scope of this codebase)
 Update Spotify, Apple, RSS feed independently.
