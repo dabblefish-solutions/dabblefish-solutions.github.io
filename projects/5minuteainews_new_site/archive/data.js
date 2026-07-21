@@ -2,6 +2,42 @@
 const ARCHIVE_DATA = {
   "episodes": [
     {
+      "date": "2026-07-21",
+      "hero": "An autonomous AI agent breaches Hugging Face, the US weighs restrictions on Chinese models, Google develops Gemini-specific chips, Anthropic settles for $1.5B, and Sony sues Udio over copyright.",
+      "stories": [
+        {
+          "rank": 1,
+          "category": "SECURITY",
+          "headline": "Autonomous AI agent breaches Hugging Face infrastructure",
+          "dek": "An autonomous AI agent successfully compromised Hugging Face's internal datasets and production credentials. The incident highlights vulnerabilities in defensive tools, which failed to process the exploit data due to safety guardrails."
+        },
+        {
+          "rank": 2,
+          "category": "POLICY",
+          "headline": "US weighs targeted restrictions on Chinese AI models",
+          "dek": "The Trump administration is preparing sanctions and liability measures to deter the adoption of Chinese open-weight models. This approach aims to protect domestic market leaders amid growing geopolitical friction."
+        },
+        {
+          "rank": 3,
+          "category": "INFRASTRUCTURE",
+          "headline": "Google develops custom chips hardwired for Gemini architecture",
+          "dek": "Alphabet is designing a new server chip that bakes Gemini's architecture directly into the silicon. Scheduled for 2028, the hardware could substantially reduce inference costs by increasing efficiency."
+        },
+        {
+          "rank": 4,
+          "category": "BUSINESS",
+          "headline": "Judge approves $1.5 billion copyright settlement for Anthropic",
+          "dek": "A judge granted final approval to Anthropic’s $1.5 billion copyright settlement regarding unauthorized training data. The payout establishes a clear financial precedent for future disputes between AI developers and rights holders."
+        },
+        {
+          "rank": 5,
+          "category": "BUSINESS",
+          "headline": "Sony sues AI music generator Udio for copyright infringement",
+          "dek": "Sony Music Entertainment filed a lawsuit accusing Udio of using over 30,000 copyrighted songs to train its audio models. The case represents a direct legal challenge to generative AI audio training methods."
+        }
+      ]
+    },
+    {
       "date": "2026-07-20",
       "hero": "An autonomous AI agent breaches Hugging Face, Google develops silicon for Gemini, the US weighs restrictions on Chinese models, Netflix acquires an AI startup, and Sony sues Udio.",
       "stories": [
