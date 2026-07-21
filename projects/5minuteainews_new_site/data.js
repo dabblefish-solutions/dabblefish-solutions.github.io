@@ -13,7 +13,7 @@
  * listing files before it: 2026-07-19, 2026-07-18, 2026-07-17.
  *
  * Fields NOT present in listing_*.json (host, listeners_this_week,
- * episode_number, teaser, note_quote) are placeholders — see the inline
+ * teaser, note_quote) are placeholders — see the inline
  * comment on each for what real value should replace it and where that
  * value should come from once the pipeline/site are wired together.
  *
@@ -32,7 +32,6 @@ const PODCAST_DATA = {
     // DB") is the real counter. This is a stand-in computed as "weekdays
     // since 2024-01-01" so numbers look plausible and increase correctly
     // across the sample dates. Replace with the DB's true episode id.
-    episode_number: 666,
 
     host: "Chip & Dot",                 // the show's two hosts (see app_v2/prompts/script.txt)
 
@@ -96,30 +95,21 @@ const PODCAST_DATA = {
   // listing as the card's headline/dek (the mockup's recent-episode cards
   // show a single top story, not the multi-topic `hero` sentence).
   //
-  // NOTE on episode_number below: the "weekdays since 2024-01-01" placeholder
-  // formula only advances on Mon–Fri, so 2026-07-17 (Fri), 2026-07-18 (Sat),
-  // and 2026-07-19 (Sun) all land on the same count (665) even though the
-  // pipeline published an episode on each of those calendar days. This is a
-  // known artifact of the placeholder, not a data error — see the note on
-  // today.episode_number above; the real DB counter won't have this gap.
   recent: [
     {
       date: "2026-07-19",
-      episode_number: 665,              // placeholder, see note on today.episode_number
       runtime_estimate: "4:44",
       headline: "China launches global AI organization to rival Western frameworks",
       dek: "President Xi Jinping announced a new international AI group offering 5,000 training slots to Global South nations. The move aims to establish parallel governance structures independent of Western influence."
     },
     {
       date: "2026-07-18",
-      episode_number: 665,
       runtime_estimate: "4:43",
       headline: "Moonshot AI's Kimi K3 matches Claude Opus 4.8",
       dek: "Chinese startup Moonshot AI released Kimi K3, matching Anthropic's Claude Opus 4.8 with a 300-person team. This challenges U.S. export controls and the necessity of compute moats."
     },
     {
       date: "2026-07-17",
-      episode_number: 665,
       runtime_estimate: "4:39",
       headline: "Google rebrands NotebookLM to Gemini Notebook and updates AI search",
       dek: "Google is integrating its note-taking app into the Gemini ecosystem and updating Search to act as an agentic assistant. The update includes dedicated cloud computers for notebooks to execute code."

@@ -45,7 +45,7 @@
 
     // ——— Top bar "now" indicator ———
     document.querySelectorAll("[data-ep-now]").forEach((n) => {
-      n.textContent = "Ep " + today.episode_number + " · live now";
+      n.textContent = "Today · live now";
     });
 
     // ——— Marquee ticker ———
@@ -54,7 +54,7 @@
       .sort((a, b) => a.rank - b.rank)
       .map((s) => "<span>" + escapeHtml(s.headline) + "</span> <span class=\"arr\">→</span>");
     const tickerHtml =
-      "<span class=\"pill\">№ " + today.episode_number + "</span> " +
+      "<span class=\"pill\">№ " + today.date + "</span> " +
       tickerItems.join(" ") +
       " <span class=\"pill\">listen now · " + today.runtime_estimate + "</span>";
     document.querySelectorAll("[data-marquee-track]").forEach((track) => {
@@ -66,7 +66,7 @@
     const eyebrow = document.querySelector("[data-hero-eyebrow]");
     if (eyebrow) {
       eyebrow.textContent =
-        dayFull + " · " + monthAbbr + " " + dayNum + " · Episode " + today.episode_number + " · " + today.runtime_estimate;
+        dayFull + " · " + monthAbbr + " " + dayNum + " · Daily briefing · " + today.runtime_estimate;
     }
     const deck = document.querySelector("[data-hero-deck]");
     if (deck) deck.textContent = today.hero;
@@ -79,7 +79,7 @@
 
     // ——— Player card ———
     const badge = document.querySelector("[data-player-badge]");
-    if (badge) badge.textContent = "Ep " + today.episode_number;
+    if (badge) badge.textContent = monthAbbr + " " + dayNum;
     const title = document.querySelector("[data-player-title]");
     if (title) title.textContent = today.teaser;
     const totalTimeEls = document.querySelectorAll("[data-player-total]");
@@ -108,8 +108,8 @@
     const rundownRight = document.querySelector("[data-rundown-meta]");
     if (rundownRight) {
       rundownRight.innerHTML =
-        "<strong>" + today.stories.length + " stories · 5 minutes</strong>Episode " +
-        today.episode_number + " · " + dayAbbr + ", " + monthAbbr + " " + dayNum + " " + yy;
+        "<strong>" + today.stories.length + " stories · 5 minutes</strong>" +
+        dayAbbr + ", " + monthAbbr + " " + dayNum + " " + yy;
     }
 
     // ——— Pull-quote slab ———
@@ -120,7 +120,7 @@
 
     // ——— Recent briefings ———
     const allLink = document.querySelector("[data-all-episodes]");
-    if (allLink) allLink.textContent = "All " + today.episode_number + " episodes →";
+    if (allLink) allLink.textContent = "All episodes →";
     const episodes = document.querySelector("[data-episodes]");
     if (episodes) {
       episodes.innerHTML = "";
@@ -131,7 +131,7 @@
         const tile = el("article", "ep-tile");
         tile.innerHTML =
           "<div>" +
-          '<span class="ep-tile-pill">№ ' + r.episode_number + " · " + abbr + "</span>" +
+          '<span class="ep-tile-pill">№ ' + r.date + " · " + abbr + "</span>" +
           "<h3>" + escapeHtml(r.headline) + "</h3>" +
           '<p class="ep-tile-d">' + escapeHtml(r.dek) + "</p>" +
           "</div>" +
