@@ -39,7 +39,7 @@ const ARCHIVE_DATA = {
     },
     {
       "date": "2026-07-20",
-      "hero": "An autonomous AI agent breaches Hugging Face, Google develops silicon for Gemini, the US weighs restrictions on Chinese models, Netflix acquires an AI startup, and Sony sues Udio.",
+      "hero": "Alibaba previews a 2.4 trillion parameter model, Moonshot pauses Kimi K3 subscriptions, Netflix acquires an AI filmmaking startup, Google releases AlphaEvolve, and Netflix deploys generative AI recommendations.",
       "stories": [
         {
           "rank": 1,

@@ -49,7 +49,7 @@ const PODCAST_DATA = {
   "recent": [
     {
       "date": "2026-07-20",
-      "runtime_estimate": "4:45",
+      "runtime_estimate": "4:48",
       "headline": "Alibaba previews 2.4 trillion-parameter Qwen 3.8-Max model without benchmarks",
       "dek": "Alibaba unveiled a multimodal Mixture-of-Experts model claiming top-tier performance. However, the lack of published benchmarks and transparency documentation makes verifying these claims difficult."
     },

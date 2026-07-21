@@ -8,12 +8,12 @@ const CONSOLE_DATA = {
     {
       "id": 15,
       "started_at": "2026-07-21T09:32:40+00:00",
-      "finished_at": null,
-      "status": "running",
+      "finished_at": "2026-07-21T09:37:26+00:00",
+      "status": "success",
       "step": "siteupdate",
       "error": null,
       "episode_date": "2026-07-21",
-      "wall_seconds": null
+      "wall_seconds": 286.0
     },
     {
       "id": 14,
@@ -210,10 +210,10 @@ const CONSOLE_DATA = {
     },
     {
       "date": "2026-07-20",
-      "hero": "An autonomous AI agent breaches Hugging Face, Google develops silicon for Gemini, the US weighs restrictions on Chinese models, Netflix acquires an AI startup, and Sony sues Udio.",
+      "hero": "Alibaba previews a 2.4 trillion parameter model, Moonshot pauses Kimi K3 subscriptions, Netflix acquires an AI filmmaking startup, Google releases AlphaEvolve, and Netflix deploys generative AI recommendations.",
       "stories": [
         {
-          "id": 51,
+          "id": 61,
           "aired_on": "2026-07-20",
           "rank": 1,
           "category": "MODELS",
@@ -222,7 +222,7 @@ const CONSOLE_DATA = {
           "source_count": 2
         },
         {
-          "id": 52,
+          "id": 62,
           "aired_on": "2026-07-20",
           "rank": 2,
           "category": "BUSINESS",
@@ -231,7 +231,7 @@ const CONSOLE_DATA = {
           "source_count": 2
         },
         {
-          "id": 53,
+          "id": 63,
           "aired_on": "2026-07-20",
           "rank": 3,
           "category": "BUSINESS",
@@ -240,7 +240,7 @@ const CONSOLE_DATA = {
           "source_count": 1
         },
         {
-          "id": 54,
+          "id": 64,
           "aired_on": "2026-07-20",
           "rank": 4,
           "category": "BIG TECH",
@@ -249,7 +249,7 @@ const CONSOLE_DATA = {
           "source_count": 1
         },
         {
-          "id": 55,
+          "id": 65,
           "aired_on": "2026-07-20",
           "rank": 5,
           "category": "BIG TECH",
